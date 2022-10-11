@@ -1,0 +1,465 @@
+[
+  //Global Text Start
+  {
+    "Key": "loading",
+    "LocalizedValue": {
+      "tr-TR": "Lütfen Bekleyin. Yükleniyor...",
+      "en-US": "Please Wait. Loading..."
+    }
+  },
+  {
+    "Key": "countries",
+    "LocalizedValue": {
+      "tr-TR": "Ülkeler",
+      "en-US": "Countries"
+    }
+  },
+  {
+    "Key": "cities",
+    "LocalizedValue": {
+      "tr-TR": "Şehirler",
+      "en-US": "Cities"
+    }
+  },
+  {
+    "Key": "schools",
+    "LocalizedValue": {
+      "tr-TR": "Okullar",
+      "en-US": "Schools"
+    }
+  },
+  {
+    "Key": "readmore",
+    "LocalizedValue": {
+      "tr-TR": "Devamını Gör",
+      "en-US": "Read More"
+    }
+  },
+  {
+    "Key": "search",
+    "LocalizedValue": {
+      "tr-TR": "arama...",
+      "en-US": "search..."
+    }
+  },
+  {
+    "Key": "sendbutton",
+    "LocalizedValue": {
+      "tr-TR": "Gönder",
+      "en-US": "Send"
+    }
+  },
+  {
+    "Key": "detailbutton",
+    "LocalizedValue": {
+      "tr-TR": "Program Detayı",
+      "en-US": "Program Detail"
+    }
+  },
+  {
+    "Key": "where",
+    "LocalizedValue": {
+      "tr-TR": "Programa Nerede dahil olabilirim ?",
+      "en-US": "Where can I join the program?"
+    }
+  },
+
+  {
+    "Key": "detailcountrybutton",
+    "LocalizedValue": {
+      "tr-TR": "Ülke Detayı",
+      "en-US": "Country Detail"
+    }
+  },
+  //Global Text End
+  //Menu Start
+  {
+    "Key": "menu.home",
+    "LocalizedValue": {
+      "tr-TR": "Anasayfa",
+      "en-US": "Home Page"
+    }
+  },
+  {
+    "Key": "menu.about",
+    "LocalizedValue": {
+      "tr-TR": "Hakkımızda",
+      "en-US": "About Us"
+    }
+  },
+  {
+    "Key": "menu.programs",
+    "LocalizedValue": {
+      "tr-TR": "Programlar",
+      "en-US": "Programs"
+    }
+  },
+  {
+    "Key": "menu.countrydict",
+    "LocalizedValue": {
+      "tr-TR": "Ülke Rehberi",
+      "en-US": "Country Directory"
+    }
+  },
+  {
+    "Key": "menu.team",
+    "LocalizedValue": {
+      "tr-TR": "Ekibimiz",
+      "en-US": "Our Team"
+    }
+  },
+  {
+    "Key": "menu.blog",
+    "LocalizedValue": {
+      "tr-TR": "Blog",
+      "en-US": "Blog"
+    }
+  },
+  {
+    "Key": "menu.sss",
+    "LocalizedValue": {
+      "tr-TR": "S.s.s",
+      "en-US": "F.a.q."
+    }
+  },
+  {
+    "Key": "menu.contact",
+    "LocalizedValue": {
+      "tr-TR": "İletişim",
+      "en-US": "Contact"
+    }
+  },
+  {
+    "Key": "menu.references",
+    "LocalizedValue": {
+      "tr-TR": "Anlaşmalı Kurumlar",
+      "en-US": "Contracted Institutions"
+    }
+  },
+  //Menu End
+  //Slide Text Start
+
+  {
+    "Key": "slidesection1",
+    "LocalizedValue": {
+      "tr-TR": "Keşfedecek ne çok yer var!",
+      "en-US": "There are so many places to explore!"
+    }
+  },
+  //Slide Text End
+  //About Text Start
+
+  {
+    "Key": "aboutsection1",
+    "LocalizedValue": {
+      "tr-TR": "Bizi Tanıyın",
+      "en-US": "Get to know us"
+    }
+  },
+  {
+    "Key": "aboutsection2",
+    "LocalizedValue": {
+      "tr-TR": "Bizi Takip Edin",
+      "en-US": "Follow Us"
+    }
+  },
+  //About Text End
+  //Programs Text Start
+  {
+    "Key": "subprograms",
+    "LocalizedValue": {
+      "tr-TR": "Alt Programlar",
+      "en-US": "Sub Programs"
+    }
+  },
+  {
+    "Key": "programsection1",
+    "LocalizedValue": {
+      "tr-TR": "NASIL YARDIMCI OLABILIRIZ ?",
+      "en-US": "HOW CAN WE HELP?"
+    }
+  },
+  {
+    "Key": "programsection2",
+    "LocalizedValue": {
+      "tr-TR": "Programlarımız",
+      "en-US": "Our Programs"
+    }
+  },
+  {
+    "Key": "programsection3",
+    "LocalizedValue": {
+      "tr-TR": "Alanında uzman kadromuzla birlikte hayallerinize giden yolda birlikte yürüyoruz.",
+      "en-US": "We walk together on the road to your dreams with our expert staff."
+    }
+  },
+  {
+    "Key": "programsection4",
+    "LocalizedValue": {
+      "tr-TR": "Bir sonraki projeniz için mükemmel seçim !",
+      "en-US": "The perfect choice for your next project!"
+    }
+  },
+  {
+    "Key": "programsection5",
+    "LocalizedValue": {
+      "tr-TR": "Şimdi bizimle iletişime geçin !",
+      "en-US": "Contact Us Now !"
+    }
+  },
+
+  //Programs Text End
+  //Stats Text Start
+
+  {
+    "Key": "statsection1",
+    "LocalizedValue": {
+      "tr-TR": "İstatistikler",
+      "en-US": "Statistics"
+    }
+  },
+  {
+    "Key": "statsection2",
+    "LocalizedValue": {
+      "tr-TR": "Ülke",
+      "en-US": "Country"
+    }
+  },
+  {
+    "Key": "statsection3",
+    "LocalizedValue": {
+      "tr-TR": "Okul",
+      "en-US": "School"
+    }
+  },
+  {
+    "Key": "statsection4",
+    "LocalizedValue": {
+      "tr-TR": "Öğrenci",
+      "en-US": "Student"
+    }
+  },
+  {
+    "Key": "statsection5",
+    "LocalizedValue": {
+      "tr-TR": "Şehir",
+      "en-US": "City"
+    }
+  },
+  //Stats Text End
+
+  //Review Text Start
+
+  {
+    "Key": "reviewsection1",
+    "LocalizedValue": {
+      "tr-TR": "KULLANICI YORUMLARI",
+      "en-US": "What Client Says ?"
+    }
+  },
+  {
+    "Key": "reviewsection2",
+    "LocalizedValue": {
+      "tr-TR": "Fikirleriniz bizim için önem taşıyor",
+      "en-US": "Your ideas are important to us"
+    }
+  },
+  //Review Text End
+
+  //Review Text Start
+
+  {
+    "Key": "contactsection1",
+    "LocalizedValue": {
+      "tr-TR": "İletişim için Biz Sizi Arayalım",
+      "en-US": "Contact Form"
+    }
+  },
+  {
+    "Key": "contactsection2",
+    "LocalizedValue": {
+      "tr-TR": "Bizi Arayın",
+      "en-US": "Call Us"
+    }
+  },
+  {
+    "Key": "contactsection3",
+    "LocalizedValue": {
+      "tr-TR": "Talepte Bulunun",
+      "en-US": "Make a Request"
+    }
+  },
+  {
+    "Key": "contactsection4",
+    "LocalizedValue": {
+      "tr-TR": "Konu",
+      "en-US": "Subject"
+    }
+  },
+  {
+    "Key": "contactsection5",
+    "LocalizedValue": {
+      "tr-TR": "Ad Soyad",
+      "en-US": "Full Name"
+    }
+  },
+  {
+    "Key": "contactsection6",
+    "LocalizedValue": {
+      "tr-TR": "Telefon Numarası",
+      "en-US": "Phone Number"
+    }
+  },
+  //Review Text End
+
+  //Blog Text Start
+
+  {
+    "Key": "blogsection1",
+    "LocalizedValue": {
+      "tr-TR": "Yeni Gelişmeler için Blog Yazılarımızı Takip Edin",
+      "en-US": "Follow Our Blog Posts For News"
+    }
+  },
+  {
+    "Key": "blogcategories",
+    "LocalizedValue": {
+      "tr-TR": "Blog Kategorileri",
+      "en-US": "Blog Categories"
+    }
+  },
+
+  {
+    "Key": "blogdetail",
+    "LocalizedValue": {
+      "tr-TR": "Blog Detay",
+      "en-US": "Blog Detail"
+    }
+  },
+  //Blog Text End
+
+  //Faq Text Start
+
+  {
+    "Key": "faqsection1",
+    "LocalizedValue": {
+      "tr-TR": "Sıkça Sorulan Sorular",
+      "en-US": "Frequently Asked Questions."
+    }
+  },
+  {
+    "Key": "faqsection2",
+    "LocalizedValue": {
+      "tr-TR": "Bu sayfa yurtdışı eğitim ve danışmanlık hakkında sizlerden gelen sıkça sorulan soruları içermektedir.",
+      "en-US": "This page contains frequently asked questions from you about education and consultancy abroad."
+    }
+  },
+  //Faq Text End
+
+  //Contact Text Start
+
+  {
+    "Key": "contactsection1",
+    "LocalizedValue": {
+      "tr-TR": "İletişim Formu",
+      "en-US": "Contact Form"
+    }
+  },
+  {
+    "Key": "contactsection2",
+    "LocalizedValue": {
+      "tr-TR": "Sorularınıza en kısa sürede cevap verileceltir.",
+      "en-US": "Your questions will be answered as soon as possible."
+    }
+  },
+  {
+    "Key": "contactsection11",
+    "LocalizedValue": {
+      "tr-TR": "İletişim Bilgilerimiz",
+      "en-US": "Contact Information"
+    }
+  },
+  {
+    "Key": "contactsection44",
+    "LocalizedValue": {
+      "tr-TR": "Çalışma Saatlerimiz",
+      "en-US": "Working Hours"
+    }
+  },
+  {
+    "Key": "contactworkdays",
+    "LocalizedValue": {
+      "tr-TR": "Pazartesi - Cumartesi",
+      "en-US": "Monday - Saturday"
+    }
+  },
+  {
+    "Key": "contactholiday",
+    "LocalizedValue": {
+      "tr-TR": "Pazar",
+      "en-US": "Sunday"
+    }
+  },
+  {
+    "Key": "contactnamefield",
+    "LocalizedValue": {
+      "tr-TR": "Adınız",
+      "en-US": "Name"
+    }
+  },
+  {
+    "Key": "contactmailfield",
+    "LocalizedValue": {
+      "tr-TR": "Email Address",
+      "en-US": "E-Posta"
+    }
+  },
+  {
+    "Key": "contactphonefield",
+    "LocalizedValue": {
+      "tr-TR": "Telefon",
+      "en-US": "Phone"
+    }
+  },
+  {
+    "Key": "contactaddressfield",
+    "LocalizedValue": {
+      "tr-TR": "Adres",
+      "en-US": "Address"
+    }
+  },
+  {
+    "Key": "contactsubjectfield",
+    "LocalizedValue": {
+      "tr-TR": "Konu",
+      "en-US": "Subject"
+    }
+  },
+  {
+    "Key": "contactmessagefield",
+    "LocalizedValue": {
+      "tr-TR": "Mesaj",
+      "en-US": "Message"
+    }
+  },
+  //Contact Text End
+
+  //Footer Text Start
+
+  {
+    "Key": "footersection1",
+    "LocalizedValue": {
+      "tr-TR": "Ayrıntılı Bilgi için Bizimle iletişime Geçin.",
+      "en-US": "Contact Us For Detailed Information."
+    }
+  },
+  {
+    "Key": "footersection2",
+    "LocalizedValue": {
+      "tr-TR": "Tüm Hakları Saklıdır.",
+      "en-US": "All Rights Reserved."
+    }
+  }
+  //Footer Text End
+
+]

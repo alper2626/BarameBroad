@@ -1,0 +1,81 @@
+﻿@using BaseEntities.Database
+@model List<Sss>
+@{
+    ViewData["Title"] = Localizer["menu.sss"];
+     SeoEntity seoModel = new SeoEntity
+            {
+                Description = "sıkca sorulan soruları bu sayfadan ögrenebilirsiniz.",
+                Keywords = $"sıkca sorulan sorular,yurtdisi danismanlik sikca sorulan sorular",
+                Title = "Sıkça Sorulan Sorular"
+            };
+}
+
+@section head
+ {
+     @await Component.InvokeAsync("CustomSeo", new { model = seoModel })
+ }
+
+<section class="page-header page-header-modern bg-color-quaternary p-relative">
+    <div class="container">
+        <div class="row py-5">
+            <div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+                <h1 class="text-color-dark font-weight-bold">@Localizer["faqsection1"]</h1>
+            </div>
+            <div class="col-md-3 order-1 order-md-2 align-self-center">
+                <ul class="breadcrumb d-flex justify-content-md-end text-3-5">
+                    <li><a asp-controller="Home" asp-action="Index" class="text-color-default text-color-hover-primary text-decoration-none">@Localizer["menu.home"]</a></li>
+                    <li class="active">@Localizer["menu.sss"]</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container py-4">
+
+    <div class="row">
+        <div class="col">
+
+            <h2 class="font-weight-normal text-7 mb-2">@Localizer["faqsection1"]</h2>
+            <p class="lead">@Localizer["faqsection2"]</p>
+
+            <hr class="solid my-5">
+
+            <div class="accordion accordion-modern-status accordion-modern-status-borders accordion-modern-status-arrow" id="accordion200">
+
+                @for (var i = 0; i < Model.Count(); i++)
+                {
+                    <div class="card card-default">
+                        <div class="card-header" id="collapse200HeadingOne">
+                            <h4 class="card-title m-0">
+                                <a class="accordion-toggle text-color-dark font-weight-bold collapsed" data-bs-toggle="collapse" data-bs-target="#collapse_@i" aria-expanded="false" aria-controls="collapse_@i">
+                                    @Html.Raw(Model[i].Question)
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapse_@i" class="collapse" aria-labelledby="collapse200HeadingOne" data-bs-parent="#accordion200">
+                            <div class="card-body pt-0">
+                                <p class="mb-0">
+                                    @Html.Raw(Model[i].Description)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div data-partial="/hakkimizda/iletisimpartial" class="text-center w-100" style="border: 1px dashed grey;">
+    <div>
+        <div class="col-12">
+            <div>
+                <h4> @Localizer["loading"] </h4>
+            </div>
+        </div>
+    </div>
+</div>

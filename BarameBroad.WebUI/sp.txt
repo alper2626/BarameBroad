@@ -1,0 +1,40 @@
+﻿ALTER PROCEDURE [dbo].[Sp_GetProgramDetail]
+	@Id uniqueidentifier,
+	@Lang nvarchar(5),
+	@LinkBase nvarchar(150)
+AS
+	BEGIN
+		DECLARE @TurnTable Table(Link nvarchar(max),Name nvarchar(max),EntityRelationType smallint)
+
+		INSERT INTO @TurnTable
+		SELECT 
+		S.Name as Name,
+		@LinkBase + '/okullar/okul-detay/'+S.FriendlyName as Link,
+		EntityRelationType as EntityRelationType
+		FROM ProgramRelation PR
+		INNER JOIN School S ON S.MasterId = PR.RelatedId AND Lang = @Lang
+		Where ProgramId = @Id AND EntityRelationType = 0
+
+		UNION ALL
+
+		SELECT 
+		S.Name as Name,
+		@LinkBase + '/sehirler/sehir-detay/'+S.FriendlyName as Link,
+		EntityRelationType as EntityRelationType
+		FROM ProgramRelation PR
+		INNER JOIN City S ON S.MasterId = PR.RelatedId AND Lang = @Lang
+		Where ProgramId = @Id AND EntityRelationType = 1
+		
+		UNION ALL
+
+		SELECT 
+		S.Name as Name,
+		@LinkBase + '/ulkeler/ulke-detay/'+S.FriendlyName as Link,
+		EntityRelationType as EntityRelationType
+		FROM ProgramRelation PR
+		INNER JOIN Country S ON S.MasterId = PR.RelatedId AND Lang = @Lang
+		Where ProgramId = @Id AND EntityRelationType = 2
+
+		SELECT * FROM @TurnTable
+	END
+

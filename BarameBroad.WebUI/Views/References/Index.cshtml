@@ -1,0 +1,64 @@
+﻿@{
+    ViewData["Title"] = Localizer["menu.references"];
+    SeoEntity seoModel = new SeoEntity
+            {
+                Description = "anlasmalı kurumlar bu sayfadan ögrenebilirsiniz.",
+                Keywords = $"anlasmali kurumlar",
+                Title = "Tüm Anlasmalı Kurumlar"
+            };
+}
+@section head
+ {
+     @await Component.InvokeAsync("CustomSeo", new { model = seoModel })
+ }
+
+@using BaseEntities.Database
+@model List<Reference>
+
+<section class="page-header page-header-modern bg-color-quaternary p-relative">
+    <div class="container">
+        <div class="row py-5">
+            <div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+                <h1 class="text-color-dark font-weight-bold">@Localizer["menu.references"]</h1>
+            </div>
+            <div class="col-md-3 order-1 order-md-2 align-self-center">
+                <ul class="breadcrumb d-flex justify-content-md-end text-3-5">
+                    <li><a asp-controller="Home" asp-action="Index" class="text-color-default text-color-hover-primary text-decoration-none">@Localizer["menu.home"]</a></li>
+                    <li class="active">@Localizer["menu.references"]</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="container py-4">
+
+    <div class="row">
+
+        @foreach (var item in Model)
+        {
+            var path = await StaticFileOperations.FirstImagePath(item.Id, "Reference");
+            <div class="col-lg-3 mt-3">
+
+                <span class="thumb-info thumb-info-swap-content thumb-info-centered-icons thumb-info-wrapper-direction-aware">
+                    <span class="thumb-info-wrapper">
+                        <div class="lightbox" data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
+                            <a data-caption="@item.ReferenceName" class="d-inline-block img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon mb-1 me-1" href="@path">
+                                <img class="img-fluid" src="@path" alt="@item.ReferenceName" width="110" height="110">
+                            </a>
+                        </div>
+                        <span class="thumb-info-wrapper-overlay">
+                            <span class="thumb-info-action">
+                                
+                            </span>
+                        </span>
+                    </span>
+                </span>
+
+            </div>
+
+        }
+    </div>
+
+</div>

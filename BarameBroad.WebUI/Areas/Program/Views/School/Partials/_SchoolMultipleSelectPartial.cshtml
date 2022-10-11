@@ -1,0 +1,28 @@
+﻿@model List<BaseEntities.Concrete.SelectBoxModel>
+@{
+    var list = ViewData["SelectedSchool"] as List<Guid>;
+    if (list == null)
+        list = new List<Guid>();
+}
+<select class="form-control kt-select2" id="school_select" style="width: 100%" multiple="multiple" name="Schools">
+    
+    @foreach (var item in Model)
+    {
+        if(list.Contains(item.Id))
+        {
+            <option value="@item.Id" selected="selected">@item.DisplayValue</option>
+        }
+        else
+        {
+            <option value="@item.Id">@item.DisplayValue</option>
+        }
+
+    }
+</select>
+
+<script type="text/javascript">
+
+    $('#school_select').select2({
+    });
+    
+</script>

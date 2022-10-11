@@ -1,0 +1,99 @@
+﻿@using BaseEntities.EnumTypes
+@model Module.Auth.Entities.PostAdmin.PostUserOperationClaimModel
+
+
+<div class="modal-content">
+    <form method="post" asp-action="UpdateClaims" asp-controller="OperationClaim" asp-area="Auth" id="update-form">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">@Model.UserLoginName Yetkileri Güncelle</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="card-body">
+
+                <div class="form-group">
+                    @Html.HiddenFor(q => q.UserId)
+                    <div class="form-group">
+                        @Html.LabelFor(s => s.OperationClaimIds, "Yetki")
+                        <br />
+                        <select class="form-control kt-select2 role-select" style="width:100%" multiple="multiple">
+                            @foreach (var item in Model.OperationClaimIds)
+                            {
+                                if (item.OldStatus == FormItemStatus.AddedBefore)
+                                {
+                                    <option data-ref="@item.Id" data-old-status="@item.OldStatus" data-status="@FormItemStatus.NotChange" selected="selected" value="@item.Id">@item.DisplayName</option>
+                                }
+                                else
+                                {
+                                    <option data-ref="@item.Id" data-old-status="@item.OldStatus" data-status="@FormItemStatus.NotChange" value="@item.Id">@item.DisplayName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="container row">
+                <div class="col-6">
+                    <button type="button" class="btn btn-secondary w-100" data-dismiss="modal">Kapat</button>
+                </div>
+                <div class="col-6">
+                    <button type="button" class="btn btn-primary w-100 save-btn">Kaydet</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+    
+    <script type="text/javascript">
+        $('.save-btn').click(function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            if (!$('#update-form').valid()) {
+                notificationEvents.showError("Lütfen Tüm Alanları Doldurun");
+                return;
+            }
+            var length = $('.role-select').children('option').length;
+            var addIndex = 0;
+            $.each($('.role-select').children('option'),
+                function (index, item) {
+                    if ($(item).data('status') == "Created" || $(item).data('status') == "Deleted") {
+                        $('#update-form').append('<input type="hidden" name="OperationClaimIds[' + addIndex + '].Id" value="' + $(item).data('ref') + '" />');
+                        $('#update-form').append('<input type="hidden" name="OperationClaimIds[' + addIndex + '].OldStatus" value="' + $(item).data('old-status') + '" />');
+                        $('#update-form').append('<input type="hidden" name="OperationClaimIds[' + addIndex + '].NewStatus" value="' + $(item).data('status') + '" />');
+                        addIndex++;
+                    }
+
+                    if (length == index + 1) {
+                        pageEvents.postModalForm();
+                    }
+
+                });
+
+        });
+        $('.role-select').select2({
+        });
+        $('.role-select').on('select2:select',
+            function (e) {
+                if ($(e.params.data.element).data('old-status') == 'AddedBefore') {
+                    $(e.params.data.element).data('status', 'NotChange');
+                } else {
+                    $(e.params.data.element).data('status', 'Created');
+                }
+
+            });
+
+        $('.role-select').on('select2:unselecting', function (e) {
+            if ($(e.params.args.data.element).data('old-status') == 'AddedBefore') {
+                $(e.params.args.data.element).data('status', 'Deleted');
+            } else {
+                $(e.params.args.data.element).data('status', 'NotChange');
+            }
+
+        });
+
+    </script>
+</div>

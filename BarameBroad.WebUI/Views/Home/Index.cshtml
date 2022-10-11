@@ -1,0 +1,168 @@
+﻿@{
+    ViewData["Title"] = Localizer["menu.home"];
+}
+@section head{
+    @await Component.InvokeAsync("Seo",new{relatedId=Guid.Parse("C5073B7B-4C66-4B12-AE40-E3F9E06949EB")});
+}
+
+<section class="section border-0 m-0 bg-color-quaternary p-relative image-section">
+    <div class="container">
+        <div class="row custom-hero-row">
+            <div class="col">
+                <div class="row pt-5 mt-5 mb-5 pb-5">
+                    <div class="col-12 col-lg-6 p-relative pt-5 mt-5">
+
+                        <div class="divider divider-small divider-small-lg appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="0">
+                            <hr class="bg-primary border-radius">
+                        </div>
+                        <div class="overflow-hidden mb-1">
+                            <h2 class="font-weight-semi-bold text-color-grey text-uppercase positive-ls-3 text-4-5 line-height-2 line-height-sm-7 mb-0 appear-animation" data-appear-animation="maskUp" data-appear-animation-delay="100">Barem Abroad</h2>
+                        </div>
+                        <h1 class="text-color-dark font-weight-bold text-9 pb-2 mb-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200">@(Localizer["slidesection1"])</h1>
+                        <div class="d-block appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="300">
+                            <a asp-controller="Country" asp-action="Index" data-hash-offset="0" data-hash-offset-lg="100" class="btn btn-modern btn-outline btn-tertiary btn-arrow-effect-1 text-capitalize text-2-5 px-5 py-3 anim-hover-translate-top-5px transition-2ms">
+                                @Localizer["menu.countrydict"]
+                                <i class="fas fa-arrow-right ms-2"></i>
+                            </a>
+                        </div>
+                        <div class="pt-5 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="400">
+                            <span class="d-inline-block anim-hover-translate-bottom-5px transition-2ms">
+                                <a asp-action="Index" asp-controller="Country" data-hash-offset="0" data-hash-offset-lg="100" class="btn btn-default border-color-primary bg-transparent rotate-r-90 btn-circle border-width-2 btn-lg"><i class="fas fa-arrow-right"></i></a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 p-relative text-end relative-item">
+
+                        <div class="appear-animation custom-element-wrapper custom-element-6" data-appear-animation="expandIn" data-appear-animation-delay="500">
+                            <div class="bg-color-primary particle particle-dots w-100 h-100 opacity-3"></div>
+                        </div>
+
+                        <div class="appear-animation custom-element-wrapper custom-element-7" data-appear-animation="expandIn" data-appear-animation-delay="700">
+                            <div class="bg-color-primary particle particle-dots w-100 h-100 opacity-3"></div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div data-partial="/ulkeler/anasayfa" class="text-center w-100" style="border: 1px dashed grey;">
+                    <div>
+                        <div class="col-12">
+                            <div>
+                                <h4> @Localizer["loading"] </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="appear-animation custom-element-wrapper custom-element-1" data-appear-animation="expandIn" data-appear-animation-delay="200">
+        <div class="w-100 h-100" data-plugin-float-element data-plugin-options="{'startPos': 'bottom', 'speed': 2.1, 'transition': true, 'transitionDuration': 500}">
+            <div class="custom-element rotate-r-45"></div>
+        </div>
+    </div>
+
+    <div class="appear-animation custom-element-wrapper custom-element-2" data-appear-animation="expandIn" data-appear-animation-delay="200">
+        <div class="w-100 h-100" data-plugin-float-element data-plugin-options="{'startPos': 'bottom', 'speed': 2.2, 'transition': true, 'transitionDuration': 500}">
+            <div class="custom-element rotate-r-45"></div>
+        </div>
+    </div>
+
+    <div class="appear-animation custom-element-wrapper custom-element-3" data-appear-animation="expandIn" data-appear-animation-delay="200">
+        <div class="w-100 h-100" data-plugin-float-element data-plugin-options="{'startPos': 'bottom', 'speed': 2.3, 'transition': true, 'transitionDuration': 500}">
+            <div class="custom-element rotate-r-45"></div>
+        </div>
+    </div>
+
+    <div class="appear-animation custom-element-wrapper custom-element-4" data-appear-animation="expandIn" data-appear-animation-delay="200">
+        <div class="w-100 h-100" data-plugin-float-element data-plugin-options="{'startPos': 'bottom', 'speed': 2.4, 'transition': true, 'transitionDuration': 500}">
+            <div class="custom-element rotate-r-45"></div>
+        </div>
+    </div>
+    <img class="appear-animation img-fluid custom-element-wrapper bottom-right-image" data-appear-animation="fadeIn" data-appear-animation-delay="900" src="img/banner_gorsel.png" alt="">
+</section>
+
+<div data-partial="/hakkimizda/anasayfa" class="text-center w-100" style="border: 1px dashed grey;">
+    <div>
+        <div class="col-12">
+            <div>
+                <h4> @Localizer["loading"] </h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div data-partial="/Program/anasayfa" class="text-center w-100" style="border: 1px dashed grey;">
+    <div>
+        <div class="col-12">
+            <div>
+                <h4> @Localizer["loading"] </h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div data-partial="/hakkimizda/stat" class="text-center w-100" style="border: 1px dashed grey;">
+    <div>
+        <div class="col-12">
+            <div>
+                <h4> @Localizer["loading"] </h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div data-partial="/yorum/anasayfa" class="text-center w-100" style="border: 1px dashed grey;">
+    <div>
+        <div class="col-12">
+            <div>
+                <h4> @Localizer["loading"] </h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div data-partial="/referans/anasayfa" class="text-center w-100" style="border: 1px dashed grey;">
+    <div>
+        <div class="col-12">
+            <div>
+                <h4> @Localizer["loading"] </h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div data-partial="/hakkimizda/iletisimpartial" class="text-center w-100" style="border: 1px dashed grey;">
+    <div>
+        <div class="col-12">
+            <div>
+                <h4> @Localizer["loading"] </h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div data-partial="/blog/anasayfa" class="text-center w-100" style="border: 1px dashed grey;">
+    <div>
+        <div class="col-12">
+            <div>
+                <h4> @Localizer["loading"] </h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- Google Maps - Go to the bottom of the page to change settings and map location. -->
+<div id="googlemaps" class="google-map m-0" style="min-height: 580px;"></div>
+@section Scripts{
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNAs&callback=initMap&v=weekly"
+        defer></script>
+
+}

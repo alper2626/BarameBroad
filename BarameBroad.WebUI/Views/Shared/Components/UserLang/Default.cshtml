@@ -1,0 +1,18 @@
+﻿@using BarameBroad.WebUI.Models
+@model List<UserCultureModel>
+
+
+@foreach (var item in Model)
+{
+    if (!item.Active)
+    {
+        <li class="nav-item py-2 d-inline-flex">
+            <a asp-controller="SiteConfig" asp-action="ChangeLang" asp-route-lang="@item.Name" class="text-tertiary text-3 p-relative top-1">
+                <b>
+                    @item.Name.Split("-")[0].ToUpper()
+                </b>
+            </a>
+        </li>
+    }
+}
+

@@ -1,0 +1,94 @@
+﻿@model Module.Auth.Entities.PostAdmin.PostUserCreateModel
+
+@{
+    ViewData["Title"] = "Kullanıcı Oluştur";
+}
+
+<div class="card card-custom mx-4">
+    <div class="card-header card-header-tabs-line">
+        <div class="card-toolbar">
+            <ul class="nav nav-tabs nav-bold nav-tabs-line">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#kt_contacts_view_tab_1" role="tab">
+                        <span class="nav-icon">
+                            <i class="fa fa-bell"></i>
+                        </span>
+                        <span class="nav-text">Personel Bilgileri</span>
+
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="tab-content">
+            <!--Begin:: Tab Content-->
+            <div class="tab-pane active" id="kt_contacts_view_tab_1" role="tabpanel">
+                <!--begin::Form-->
+                <form class="kt-form" method="post" asp-area="Auth" asp-controller="User" asp-action="Create">
+                    <div class="card-body">
+
+                        <div class="form-group row">
+                            <div class="col-md-4 col-sm-12">
+                                @Html.LabelFor(s => s.LoginName, "Kullanıcı Adı")
+                                @Html.TextBoxFor(s => s.LoginName, new { @class = "form-control", placeholder = "Kullanıcı Adını Girin." })
+                                @Html.ValidationMessageFor(s => s.LoginName)
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                @Html.LabelFor(s => s.FirstName, "İsim")
+                                @Html.TextBoxFor(s => s.FirstName, new { @class = "form-control", placeholder = "Adınızı Girin." })
+                                @Html.ValidationMessageFor(s => s.FirstName)
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                @Html.LabelFor(s => s.LastName, "Soyisim")
+                                @Html.TextBoxFor(s => s.LastName, new { @class = "form-control", placeholder = "Soyisiminizi Girin." })
+                                @Html.ValidationMessageFor(s => s.LastName)
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-4 col-sm-12">
+                                @Html.LabelFor(s => s.MailAddress, "E-Posta")
+                                @Html.TextBoxFor(s => s.MailAddress, new { @class = "form-control", type = "email", placeholder = "E-Posta Adresinizi Girin." })
+                                @Html.ValidationMessageFor(s => s.MailAddress)
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                @Html.LabelFor(s => s.PhoneNumber, "Telefon")
+                                @Html.TextBoxFor(s => s.PhoneNumber, new { @class = "form-control", placeholder = "Telefon Numaranızı Girin.", id = "phone" })
+                                @Html.ValidationMessageFor(s => s.PhoneNumber)
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <div data-partial="@Url.Action("OperationClaimSelectBoxForCreateUser","OperationClaim",new{Area="Auth"})"></div>
+                            </div>
+
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-6 col-sm-12">
+                                @Html.LabelFor(s => s.PasswordModel.Password, "Şifre")
+                                @Html.TextBoxFor(s => s.PasswordModel.Password, new { @class = "form-control", type = "password", placeholder = "Şifreyi Girin" })
+                                @Html.ValidationMessageFor(s => s.PasswordModel.Password)
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                @Html.LabelFor(s => s.PasswordModel.PasswordConfirm, "Şifre Tekrar")
+                                @Html.TextBoxFor(s => s.PasswordModel.PasswordConfirm, new { @class = "form-control", type = "password", placeholder = "Şifreyi Tekrar Girin" })
+                                @Html.ValidationMessageFor(s => s.PasswordModel.PasswordConfirm)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary w-100">Kaydet</button>
+                    </div>
+                </form>
+
+                <!--end::Form-->
+            </div>
+            <!--End:: Tab Content-->
+
+        </div>
+
+    </div>
+
+</div>
+
+

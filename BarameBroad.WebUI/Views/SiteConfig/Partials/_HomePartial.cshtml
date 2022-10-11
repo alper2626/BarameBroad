@@ -1,0 +1,72 @@
+﻿@using BaseEntities.Database
+@model SiteConfig
+
+<section class="section border-0 bg-transparent m-0" id="start">
+    <div class="container py-5 mb-3">
+        <div class="row">
+            <div class="col text-center">
+
+                <div class="divider divider-small divider-small-lg mt-0 text-center appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="0">
+                    <hr class="bg-primary border-radius m-auto">
+                </div>
+                <div class="overflow-hidden">
+                </div>
+                <h2 class="text-color-dark font-weight-bold text-8 pb-2 mb-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200">@(Localizer["aboutsection1"]) </h2>
+
+            </div>
+        </div>
+        <div class="row pt-4 pb-5">
+            <div class="col-lg-6 text-center p-relative pt-5">
+
+                <div class="appear-animation custom-element-wrapper custom-element-9" data-appear-animation="expandIn" data-appear-animation-delay="1000">
+                    <div class="bg-color-primary particle particle-dots w-100 h-100 opacity-3"></div>
+                </div>
+
+                <div class="appear-animation custom-element-wrapper custom-element-10" data-appear-animation="expandIn" data-appear-animation-delay="1200">
+                    <div class="bg-color-primary particle particle-dots w-100 h-100 opacity-3"></div>
+                </div>
+
+                <div class="appear-animation custom-element-wrapper custom-element-11 p-relative rotate-r-45" data-appear-animation="fadeIn" data-appear-animation-delay="300">
+                    <img class="img-fluid" src="@await StaticFileOperations.FirstImagePath(Guid.Parse("c5073b7b-4c66-4b12-ae40-e3f9e06949eb"),"SiteConfig")" alt="@Model.SiteName">
+                </div>
+
+            </div>
+            <div class="col-lg-6 pt-5 mt-5 pt-lg-0 mt-lg-0">
+                <h3 class="font-weight-semi-bold text-color-grey text-uppercase positive-ls-3 text-4 line-height-2 line-height-sm-7 mb-0 appear-animation m-0 p-0" data-appear-animation="maskUp" data-appear-animation-delay="100">
+                    <img alt="Barem ABroad" class="logo-about" src="~/logo_about.svg">
+                </h3>
+                <div class="appear-animation" data-appear-animation="fadeIn" data-appear-animation-delay="300">
+
+                    @if (Model.AboutUs.Length > 170)
+                    {
+                        <p class="font-weight-medium text-4-5 line-height-5">
+                            @Html.Raw(Model.AboutUs.Substring(0,170)) ...
+                        </p>
+                    }
+                    else
+                    {
+                        <p class="font-weight-medium text-4-5 line-height-5">
+                            @Html.Raw(Model.AboutUs)
+                        </p>
+                    }
+                </div>
+
+                <div class="d-block pt-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="300">
+                    <a asp-action="Index" asp-controller="SiteConfig" class="btn btn-modern btn-primary btn-arrow-effect-1 text-capitalize text-2-5 px-5 py-3 anim-hover-translate-top-5px transition-2ms">@(Localizer["readmore"]) <i class="fas fa-arrow-right ms-2"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script type="text/javascript">
+    $(function(){
+        if ($.isFunction($.fn['themePluginAnimate']) && $('[data-appear-animation]').length) {
+            theme.fn.dynIntObsInit( '[data-appear-animation], [data-appear-animation-svg]', 'themePluginAnimate', theme.PluginAnimate.defaults );
+        }
+
+
+    });
+</script>
+

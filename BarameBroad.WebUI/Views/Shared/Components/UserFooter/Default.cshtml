@@ -1,0 +1,97 @@
+﻿@using BaseEntities.Database
+@using static Extensions.UiExtensions.StaticFileOperations
+@model List<ProgramEntity>
+@{
+    SiteConfig cfg = ViewData["Config"] as SiteConfig;
+    List<SocialNetworkEntity> socials = ViewData["Socials"] as List<SocialNetworkEntity>;
+}
+
+<footer id="footer" class="position-relative bg-dark border-top-0">
+    <div class="container pt-5 pb-3">
+        <div class="row pt-5">
+            <div class="col-lg-4">
+                <a asp-action="Index" asp-controller="Home" class="text-decoration-none">
+                    <img src="@await StaticFileOperations.FirstImagePath(StaticFileTypes.FooterLogo.ToString())" width="123" height="32" class="img-fluid mb-4" alt="@cfg.SiteName" />
+                </a>
+                <p class="text-3-5 font-weight-medium pe-lg-2">@(Localizer["footersection1"]) </p>
+                <ul class="list list-unstyled">
+                    <li class="d-flex align-items-center mb-4">
+                        <i class="icon icon-envelope text-color-light text-5 font-weight-bold position-relative top-1 me-3-5"></i>
+                        <a href="mailto:@cfg.MailAddress" class="d-inline-flex align-items-center text-decoration-none text-color-light text-color-hover-tertiary font-weight-semibold text-4-5">@cfg.MailAddress</a>
+                    </li>
+                    <li class="d-flex align-items-center mb-4">
+                        <i class="icon icon-phone text-color-light text-5 font-weight-bold position-relative top-1 me-3-5"></i>
+                        <a href="tel:@cfg.PhoneNumberFormat" class="d-inline-flex align-items-center text-decoration-none text-color-light text-color-hover-tertiary font-weight-semibold text-4-5">@cfg.PhoneNumber</a>
+                    </li>
+                </ul>
+                <ul class="social-icons social-icons-clean social-icons-medium">
+
+                    @foreach (var item in socials)
+                    {
+                        <li>
+                            <a href="@item.Link" target="_blank" data-cursor-effect-hover="fit">
+                                <i class="@item.Icon text-color-grey"></i>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="col-lg-8">
+                <div class="row mb-5-5">
+                    <div class="col-lg-6 mb-4 mb-lg-0">
+                        <h4 class="text-color-light font-weight-bold mb-3">Menu</h4>
+                        <ul class="list list-unstyled columns-lg-2">
+                            <li>
+                                <a asp-action="Index" asp-controller="Home" class="text-color-grey text-color-hover-tertiary">@(Localizer["menu.home"])</a>
+                            </li>
+                            <li>
+                                <a asp-action="Index" asp-controller="SiteConfig" class="text-color-grey text-color-hover-tertiary">@(Localizer["menu.about"])</a>
+                            </li>
+                            <li>
+                                <a asp-action="Index" asp-controller="Program" class="text-color-grey text-color-hover-tertiary">@(Localizer["menu.programs"])</a>
+                            </li>
+                            <li>
+                                <a asp-action="Index" asp-controller="Country" class="text-color-grey text-color-hover-tertiary">@(Localizer["menu.countrydict"])</a>
+                            </li>
+                            <li>
+                                <a asp-action="Index" asp-controller="Team" class="text-color-grey text-color-hover-tertiary">@(Localizer["menu.team"])</a>
+                            </li>
+                            <li>
+                                <a asp-action="Index" asp-controller="BlogCategory" class="text-color-grey text-color-hover-tertiary">@(Localizer["menu.blog"])</a>
+                            </li>
+                            <li>
+                                <a asp-action="Contact" asp-controller="SiteConfig" class="text-color-grey text-color-hover-tertiary">@(Localizer["menu.contact"])</a>
+                            </li>
+                            <li>
+                                <a asp-action="Index" asp-controller="Faq" class="text-color-grey text-color-hover-tertiary">@(Localizer["menu.sss"])</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-6">
+                        <h4 class="text-color-light font-weight-bold mb-3">@(Localizer["menu.programs"])</h4>
+                        <ul class="list list-unstyled columns-lg-2">
+                            @foreach (var item in Model)
+                            {
+                                <li>
+                                    <a asp-action="ProgramDetail" asp-controller="Program" asp-route-friendlyName="@item.FriendlyName" class="text-color-grey text-color-hover-tertiary">@item.Name</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright bg-transparent">
+        <div class="container">
+            <hr class="bg-color-light opacity-1">
+            <div class="row">
+                <div class="col mt-4 mb-4 pb-5">
+                    <p class="text-center text-3 mb-0">Barem Abroad. © 2022. @(Localizer["footersection2"])</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

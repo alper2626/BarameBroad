@@ -1,0 +1,120 @@
+﻿@using DevExtreme.AspNet.Mvc
+@using Module.Auth.Entities.GetAdmin
+
+
+@{
+    ViewData["Title"] = "Kullanıcı Listesi";
+
+}
+<style>
+</style>
+<div class="card card-custom mx-4">
+    <div class="card-header">
+        <div class="card-title">
+            <h3 class="card-label">
+                Kullanıcı Listesi
+            </h3>
+        </div>
+
+        <div class="card-toolbar">
+            <div class="dropdown dropdown-inline">
+                <button type="button" class="btn btn-clean" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <b>  İşlemler </b>
+                    <i class="fa fa-arrow-right fa-sm"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
+                    <ul class="navi navi-hover">
+                        <li class="navi-item">
+                            <a asp-controller="User" asp-action="Create" asp-area="Auth" class="navi-link">
+                                
+                                <span class="navi-text">Yeni Kullanıcı Ekle</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="card-body">
+        @(Html.DevExtreme().DataGrid<GetUserModel>().ID("UserTable")
+            .Columns(columns =>
+            {
+                columns.AddFor(w => w.Id).Caption("İşlemler").CellTemplate(
+                    @<text>
+
+                        <div class="dropdown grid-menu-btn">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                -- İşlem Seçin --
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="pointer gray dropdown-item" data-fill-url="@Url.Action("UpdatePasswordModal", "Password",new{Area="Auth"})?Id=<%=data.Id%>&DisplayValue=<%=data.LoginName%>">
+                                    Şifre Değiştir
+                                </a>
+                                <a class="pointer gray dropdown-item" data-fill-url="@Url.Action("UpdateUserOperationClaimModal", "OperationClaim",new{Area="Auth"})?Id=<%=data.Id%>&DisplayValue=<%=data.LoginName%>">
+                                    Rol Düzenle
+                                </a>
+                                <a class="pointer gray dropdown-item" href="@Url.Action("Update", "User")?id=<%=value%>">
+                                   Kullanıcı Bilgilerini Düzenle
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="pointer gray dropdown-item" target="_blank" href="@Url.Action("RecordHistory","Log",new{Area="Logging"})?refId=<%=data.Id%>">
+                                    İşlem Geçmişi
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="pointer red dropdown-item" data-area="Auth" data-async-remove-grid="User" data-ref="<%=data.Id%>" data-from="UserTable">
+                                    Sil
+                                </a>
+                            </div>
+                        </div>
+                     </text>
+
+                    ).Alignment(HorizontalAlignment.Center);
+
+
+                columns.AddFor(s => s.LoginName).Caption("Giriş Adı");
+                columns.AddFor(s => s.FirstName).Caption("Ad");
+                columns.AddFor(s => s.LastName).Caption("Soyad");
+                columns.AddFor(s => s.MailAddress).Caption("E-Posta");
+                columns.AddFor(s => s.PhoneNumber).Caption("Telefon");
+                columns.AddFor(s => s.CreateTime).Caption("O. Tarihi");
+                columns.AddFor(s => s.UpdateTime).Caption("D. Tarihi").SortIndex(0).SortOrder(SortOrder.Desc);
+            })
+            .Summary(s => s.TotalItems(items =>
+            {
+                items.AddFor(m => m.Id)
+                    .SummaryType(SummaryType.Count).Alignment(HorizontalAlignment.Left)
+                    .CustomizeText(@<text>
+                                       function(data) { return "Kullanıcı Sayısı : " + data.value; }
+                                    </text>);
+
+            }))
+            .SearchPanel(searchPanel => searchPanel.Visible(true).Width(250).Placeholder("Buradan Arama Yapabilirsiniz..."))
+            .ElementAttr("IsDxGridTable", true)
+            .Export(export => export.Enabled(true))
+            .AllowColumnResizing(true)
+            .AllowColumnReordering(true)
+            .ColumnAutoWidth(true)
+            .GroupPanel(panel => panel.Visible(true).EmptyPanelText("Gruplamak istediğiniz kolonu sürükleyin"))
+            .RemoteOperations(true)
+            .NoDataText("Aradığınız kriterlere göre bir veri bulunamadı.")
+            .ShowBorders(true)
+            .HoverStateEnabled(true)
+            .RowAlternationEnabled(true)
+            .OnContentReady("pageEvents.setTooltips")
+            .Paging(pager => pager.Enabled(true).PageSize(10))
+            .NoDataText("Görüntülenecek veri bulunamadı.")
+            .LoadPanel(load => load.Enabled(true).ShowIndicator(true).Text("Yükleniyor"))
+            .FilterRow(row => row.Visible(true).ApplyFilterText("Arama").ApplyFilter(GridApplyFilterMode.Auto))
+            .DataSource(ds => ds.Mvc()
+                .LoadAction("GridSource")
+                .Controller("User")
+                .Area("Auth")
+            )
+            .Width("99%")
+            )
+
+    </div>
+</div>
+

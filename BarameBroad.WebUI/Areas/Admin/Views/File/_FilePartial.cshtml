@@ -1,0 +1,104 @@
+﻿@model List<string>
+
+<div class="row draggable-zone">
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        if (!string.IsNullOrEmpty(Model[i]))
+        {
+            <div class="col-lg-3 col-md-6 col-sm-12 text-center draggable" data-remove="@i">
+
+                <div class="card card-custom" data-fp="@Model[i]">
+                    <div class="card-header">
+                        <div class="card-title">
+
+                            <h3 class="card-label">
+                                Dosya Eki
+
+                            </h3>
+                        </div>
+                        <div class="card-toolbar">
+                            <a target="_blank" data-toggle="kt-tooltip" title="" data-placement="top" data-original-title="İndir" asp-controller="File" asp-action="DownloadFile" asp-route-dir="@TempData["FileType"]" asp-route-path="@Model[i]" class="btn btn-sm btn-icon btn-light-success mr-2">
+                                <i class="flaticon2-download"></i>
+                            </a>
+                            <a onclick="deleteFile(this)" data-toggle="kt-tooltip" title="" data-placement="top" data-original-title="Sil" data-message="Dosya Silinsin mi ?" data-href="@Url.Action("DeleteFile", "File")?path=@Model[i]&type=@TempData["FileType"]" data-remove-index="@i" class="btn btn-sm btn-icon btn-light-danger  mr-2">
+                                <i class="flaticon2-trash"></i>
+                            </a>
+                            <a data-toggle="kt-tooltip" title="" data-placement="top" data-original-title="Yer Değiştir"class="btn btn-sm btn-icon btn-light-info draggable-handle">
+                                <i class="fa fa-arrows-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        @{
+                            var exts = Model[i].Split('.');
+                            string ext = "";
+                            if (exts.Length >= 2)
+                            {
+                                ext = exts.Last().ToLower();
+                            }
+                        }
+                        @if (ext.Contains("jpg") || ext.Contains("jpeg") || ext.Contains("png") || ext.Contains("webp"))
+                        {
+                            <a data-fancybox="gallery" href="@Model[i]">
+
+                                <div class="symbol symbol-150 mr-3">
+                                    <img src="@Model[i]" alt="@Model[i].Split('/').Last()">
+                                </div>
+                            </a>
+
+                        }
+                        else
+                        {
+                            <div class="symbol symbol-circle symbol-50 mr-3">
+                                <img src="~/assets/media/zip.svg" alt="@Model[i].Split('/').Last()">
+                            </div>
+
+                        }
+
+                    </div>
+                </div>
+
+            </div>
+        }
+    }
+    
+</div>
+@if (Model.Count > 1)
+{
+<div class="row m-2 reorder-wrapper" style="display:none">
+    <div class="col-12">
+        <button type="button" class="btn btn-success reorder w-100">
+            Sıralamayı Kaydet
+        </button>
+    </div>
+</div>
+}
+
+<div class="row mt-2">
+    <a class="m-auto" data-fancybox="gallery" href="~/files/enboy.png">
+        Fotograf ölçüleri için tıklayın.
+    </a>
+</div>
+<div class="row pt-3">
+    <div class="col-12">
+        <div class="dropzone dropzone-default dropzone-success dz-clickable">
+            <div class="dropzone-msg dz-message needsclick">
+                <div id="dropzonePreview">
+                    
+                </div>
+                <h3 class="dropzone-msg-title">Dosya Sürükleyin Yada Seçmek İçin Tıklayın.</h3>
+                <span class="dropzone-msg-desc">10Mb x 5 Dosya yükleyebilirsiniz.</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="~/admin/js/File.js"></script>
+<script type="text/javascript">
+    $(function () {
+        
+        pageEvents.setTooltips();
+    })
+</script>

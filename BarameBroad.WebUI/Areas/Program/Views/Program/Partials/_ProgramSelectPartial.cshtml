@@ -1,0 +1,27 @@
+﻿@model List<BaseEntities.Concrete.SelectBoxModel>
+
+<select class="form-control kt-select2" id="program_select" style="width: 100%">
+    <option value="0" selected="selected">Program Seçin</option>
+    @foreach (var item in Model)
+    {
+        if(ViewData["SelectedProgram"] != null && Guid.Parse(ViewData["SelectedProgram"].ToString()) == item.Id)
+        {
+            <option value="@item.Id" selected="selected">@item.DisplayValue</option>
+        }
+        else
+        {
+            <option value="@item.Id">@item.DisplayValue</option>
+        }
+
+    }
+</select>
+
+<script type="text/javascript">
+
+    $('#program_select').select2({
+    });
+    $('#program_select').on('select2:select', function (e) {
+        $('#ProgramId').val(e.params.data.id);
+    });
+
+</script>

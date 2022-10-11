@@ -1,0 +1,47 @@
+﻿@using BaseEntities.Database
+@model List<CountryEntity>
+@{
+    int index = 0;
+    string c = "";
+}
+<div class="row align-items-end justify-content-end pt-5 p-relative custom-index-10">
+    <div class="col-lg-9 text-end pt-5">
+        <div class="appear-animation" data-appear-animation="fadeIn" data-appear-animation-delay="800">
+            <div class="owl-carousel owl-theme stage-margin rounded-nav nav-dark nav-icon-1 nav-size-md nav-position-1" data-plugin-options="{'responsive': {'0': {'items': 1}, '479': {'items': 1}, '768': {'items': 2}, '979': {'items': 2}, '1199': {'items': 2}}, 'margin': 10, 'loop': true, 'nav': true, 'dots': false, 'stagePadding': 40}">
+                @foreach (var item in Model)
+                {
+                    index++;
+                    if (index % 2 == 0)
+                    {
+                        c = "primary";
+                    }
+                    else
+                    {
+                        c = "dark";
+                    }
+                    <div class="overlay overlay-color-@c overlay-show overlay-op-8 rounded overflow-hidden">
+                        <img alt="@item.Name" class="img-fluid rounded" src="@await StaticFileOperations.FirstImagePath(item.MasterId,"Country")">
+                        <a asp-action="CountryDetail" asp-controller="Country" asp-route-friendlyName="@item.FriendlyName" class="p-absolute z-index-2 top-0 left-0 w-100 h-100 anim-hover-translate-top-5px transition-2ms">
+                            <span class="p-absolute left-0 bottom-0 text-color-light text-start ms-4 mb-3 ps-2 pb-1">
+                                <strong class="text-5 negative-ls-05 font-weight-bold">@item.Name</strong>
+                                <p class="font-weight-medium text-color-light opacity-7 p-relative bottom-4 mb-0">@(Localizer["readmore"])</p>
+                            </span>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        if ($.isFunction($.fn['themePluginAnimate']) && $('[data-appear-animation]').length) {
+            theme.fn.dynIntObsInit( '[data-appear-animation], [data-appear-animation-svg]', 'themePluginAnimate', theme.PluginAnimate.defaults );
+        }
+
+            if ($.isFunction($.fn['themePluginCarousel']) && $('[data-plugin-carousel]:not(.manual), .owl-carousel:not(.manual)').length) {
+            theme.fn.intObsInit( '[data-plugin-carousel]:not(.manual), .owl-carousel:not(.manual)', 'themePluginCarousel' );
+        }
+    });
+</script>
+

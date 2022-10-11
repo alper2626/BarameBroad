@@ -1,0 +1,71 @@
+﻿@using BaseEntities.Database
+@using DevExtreme.AspNet.Mvc
+@model ContentDetailTempModel
+
+
+   @(Html.DevExtreme().DataGrid<ContentDetail>().ID("ContentDetailTable")
+            .Columns(columns =>
+            {
+                columns.AddFor(w => w.MasterId).Caption("İşlemler").CellTemplate(
+                    @<text>
+
+                        <div class="dropdown grid-menu-btn">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                -- İşlem Seçin --
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="pointer gray dropdown-item" target="_blank" href="@Url.Action("Update", "ContentDetail",new{Area="Program"})?id=<%=value%>&DisplayText=@Model.DisplayText&Value=@Model.Value&EntityRelationType=@Model.EntityRelationType">
+                                   İçerik Detay Bilgilerini Düzenle
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="pointer gray dropdown-item" target="_blank" href="@Url.Action("UpdateSeo", "Seo",new{Area="Seo"})?relatedId=<%=data.Id%>&key=ContentDetail&show=ContentDetail">
+                                    Seo Bilgileri
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="pointer red dropdown-item" data-area="Program" data-async-remove-grid="ContentDetail" data-ref="<%=data.MasterId%>" data-from="ContentDetail" data-refresh="false">
+                                    Sil
+                                </a>
+                            </div>
+                        </div>
+                     </text>
+
+                    ).Alignment(HorizontalAlignment.Center);
+
+
+                columns.AddFor(s => s.Title).Caption("Başlık");
+                columns.AddFor(s => s.Master.Order).Caption("Sıra");
+            })
+            .Summary(s => s.TotalItems(items =>
+            {
+                items.AddFor(m => m.Id)
+                    .SummaryType(SummaryType.Count).Alignment(HorizontalAlignment.Left)
+                    .CustomizeText(@<text>
+                                       function(data) { return "İçerik Detay Sayısı : " + data.value; }
+                                    </text>);
+
+            }))
+            .SearchPanel(searchPanel => searchPanel.Visible(true).Width(250).Placeholder("Buradan Arama Yapabilirsiniz..."))
+            .ElementAttr("IsDxGridTable", true)
+            .Export(export => export.Enabled(true))
+            .AllowColumnResizing(true)
+            .AllowColumnReordering(true)
+            .ColumnAutoWidth(true)
+            .GroupPanel(panel => panel.Visible(true).EmptyPanelText("Gruplamak istediğiniz kolonu sürükleyin"))
+            .RemoteOperations(true)
+            .NoDataText("Aradığınız kriterlere göre bir veri bulunamadı.")
+            .ShowBorders(true)
+            .HoverStateEnabled(true)
+            .RowAlternationEnabled(true)
+            .OnContentReady("pageEvents.setTooltips")
+            .Paging(pager => pager.Enabled(true).PageSize(10))
+            .NoDataText("Görüntülenecek veri bulunamadı.")
+            .LoadPanel(load => load.Enabled(true).ShowIndicator(true).Text("Yükleniyor"))
+            .FilterRow(row => row.Visible(true).ApplyFilterText("Arama").ApplyFilter(GridApplyFilterMode.Auto))
+            .DataSource(ds => ds.Mvc()
+                .LoadAction("GridSource")
+                .Controller("ContentDetail")
+                .Area("Program")
+                .LoadParams(new ContentDetailGridParameter{EntityRelationType =Model.EntityRelationType,Value=Model.Value })
+            )
+            .Width("99%")
+            )

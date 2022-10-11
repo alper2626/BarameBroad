@@ -1,0 +1,24 @@
+﻿@model List<BaseEntities.Concrete.SelectBoxModel>
+@Html.Label("Yetki")
+<br />
+<select class="form-control kt-select2 role-select" style="width:100%" multiple="multiple">
+    @foreach (var item in Model)
+    {
+        <option value="@item.Id">@item.DisplayValue</option>
+    }
+</select>
+
+<script type="text/javascript">
+    $('.role-select').select2({
+    });
+    $('.role-select').on('select2:select',
+        function (e) {
+            $('form').append('<input type="hidden" name="ClaimIds" value="' + e.params.data.id + '"/>');
+        });
+
+    $('.role-select').on('select2:unselecting', function (e) {
+
+        $('input[value="' + e.params.args.data.id + '"]').remove();
+    });
+
+</script>

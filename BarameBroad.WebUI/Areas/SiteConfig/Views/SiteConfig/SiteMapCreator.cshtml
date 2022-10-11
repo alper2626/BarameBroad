@@ -1,0 +1,88 @@
+﻿@using Extensions.SiteMapBuilder
+@using Extensions.EnumExtensions
+@{
+    ViewData["Title"] = "Site Haritası Oluştur";
+}
+<div class="container">
+    <div class="alert alert-custom alert-light-primary fade show mb-5" role="alert">
+        <div class="alert-icon"><i class="flaticon-warning"></i></div>
+        <div class="alert-text">
+            Birden çok site haritası oluşturacaksanız lütfen harita grubu dosyasını indirip site haritalarınızın isimlerini bu dosyaya kayıt edin.  </b>
+            <br /><br />
+            Bir site map dosyasına en fazla 50.000 satır veri işlenebilir. Daha fazla veriniz var ise lütfen dosyaları parçalara ayırın.
+        </div>
+        <div class="alert-close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true"><i class="ki ki-close"></i></span>
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<div class="card card-custom mx-4">
+    <div class="card-header">
+        <div class="card-title">
+            <h3 class="card-label">
+                Site Haritası İndir
+            </h3>
+        </div>
+    </div>
+    <form method="get" target="_blank">
+        <div class="card-body">
+            <div>
+                <div class="form-group">
+                    <label class="font-size-h6 font-weight-bolder text-dark"> Frekans Seçin </label>
+                    <select name="freq" class="form-control form-control h-auto p-5 rounded-lg font-size-h6 kt-select2" style="width: 100%">
+                        @foreach (SiteMapFreq status in (SiteMapFreq[])Enum.GetValues(typeof(SiteMapFreq)))
+                        {
+                            <option value="@status">@status.GetDescription()</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="font-size-h6 font-weight-bolder text-dark"> Öncelik (0-1 arasında) </label>
+                    <input type="text" name="priority" data-number="true"  step="0.1" max="1" min="0" value="0.4" class="form-control h-auto p-5 rounded-lg font-size-h6"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-sm-12">
+                    <button data-link="/ProductPortfolio/PortfolioCategory/CreateSiteMap" class="sitemap-btn btn btn-primary w-100">Kategori Haritası</button>
+                </div>
+                <div class="col-lg-4 col-sm-12">
+                    <button data-link="/ProductPortfolio/PortfolioProduct/CreateSiteMap" class="sitemap-btn btn btn-primary w-100">Ürün Haritası</button>
+
+                </div>
+                <div class="col-lg-4 col-sm-12">
+                    <button data-link="/Blog/BlogCategory/CreateSiteMap" class="sitemap-btn btn btn-primary w-100">Blog Kategori Haritası</button>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-lg-4 col-sm-12">
+                    <button data-link="/Blog/Blog/CreateSiteMap" class="sitemap-btn btn btn-primary w-100">Blog Haritası</button>
+                </div>
+                <div class="col-lg-4 col-sm-12">
+                    <button data-link="/SiteConfig/SiteConfig/CreateSiteMap" class="sitemap-btn btn btn-primary w-100">Site Genel Haritası</button>
+                </div>
+                <div class="col-lg-4 col-sm-12">
+                    <a asp-area="SiteConfig" asp-controller="SiteConfig" asp-action="CreateSiteMapGroup" class="btn btn-primary w-100">Harita Grubu</a>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $('.sitemap-btn').click(function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            var url = getBaseUrl() + $(this).data('link');
+            $('form').attr('action', url);
+            $('form').submit();
+        });
+    </script>
+}

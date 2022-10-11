@@ -1,0 +1,20 @@
+﻿@using BaseEntities.Database
+
+@model SeoEntity
+@{
+    var config = ViewData["ConfigData"] as SiteConfig;
+}
+<!-- Required meta tags -->
+<meta name="keywords" content="@config.SiteName,@Model.Title,@Model.Keywords">
+<meta name="description" content="@Model.Description">
+<link rel="shortcut icon" type="image/png" href="@StaticFileOperations.FirstImagePath(StaticFileOperations.StaticFileTypes.Fav.ToString()).Result" />
+
+@if (!string.IsNullOrEmpty(Model.Title))
+{
+    <title> @Model.Title | @config.SiteName</title>
+}
+else
+{
+    <title>@ViewData["Title"] | @config.SiteName</title>
+}
+

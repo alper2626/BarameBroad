@@ -1,0 +1,28 @@
+﻿@using Extensions.UiExtensions
+
+@{
+    ViewData["Title"] = "Footer Logo Düzenle";
+}
+
+<form asp-controller="SiteConfig" asp-action="PostFooterLogo" asp-area="SiteConfig" method="post" enctype="multipart/form-data" id="upload-imagezone" data-redirect="@Url.Action("UploadFooterLogo","SiteConfig",new{Area="SiteConfig"})">
+    <div class="card card-custom mx-4">
+        <div class="card-header">
+            <div class="card-title">
+                <h3 class="card-label">
+                    Footer Logo Düzenle
+
+                </h3>
+            </div>
+        </div>
+        <div class="card-body">
+
+            <div data-partial="@Url.Action("FileBasePartial","File",new{Area="Admin"})?type=@StaticFileOperations.StaticFileTypes.FooterLogo"></div>
+
+        </div>
+        <div class="card-footer">
+            <div class="kt-form__actions">
+                <button type="submit" class="btn btn-primary w-100">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</form>

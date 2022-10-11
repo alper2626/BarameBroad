@@ -1,0 +1,155 @@
+﻿@{
+    ViewData["Title"] = Localizer["detailcountrybutton"];
+    List<ContentDetail> details = ViewData["Details"] as List<ContentDetail>;
+    string friendlySelected = ViewData["SelectedDetail"].ToString();
+    ContentDetail selectedItem = null;
+    List<string> paths = new List<string>();
+    foreach (var item in details)
+    {
+        if (item.FriendlyName == friendlySelected)
+        {
+            selectedItem = item;
+            break;
+        }
+    }
+}
+@if (selectedItem != null)
+{
+    @section head{
+    @await Component.InvokeAsync("Seo",new{relatedId=selectedItem.MasterId});
+}
+}
+else
+{
+    @section head{
+    @await Component.InvokeAsync("Seo",new{relatedId=Model.MasterId});
+}
+}
+@using BaseEntities.Database
+@model School
+
+<section class="page-header page-header-modern bg-color-quaternary p-relative">
+    <div class="container">
+        <div class="row py-5">
+            <div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+
+                @if (selectedItem == null)
+                {
+                    <h1 class="text-color-dark font-weight-bold">
+                        @Model.Name
+                    </h1>
+                }
+                else
+                {
+                    <h1 class="text-color-dark font-weight-bold">
+                        @selectedItem.Title
+                    </h1>
+                }
+
+            </div>
+            <div class="col-md-4 order-1 order-md-2 align-self-center">
+                <ul class="breadcrumb d-flex justify-content-md-end text-3-5">
+                    <li><a asp-controller="Home" asp-action="Index" class="text-color-default text-color-hover-primary text-decoration-none">@Localizer["menu.home"]</a></li>
+                    <li><a asp-controller="Country" asp-action="Index" class="text-color-default text-color-hover-primary text-decoration-none">@Localizer["menu.countrydict"]</a></li>
+                    <li class="active">@Model.Name</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container py-4">
+
+    <div class="row mt-5">
+        <div class="col">
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="tabs tabs-vertical tabs-right tabs-navigation tabs-navigation-simple">
+                        <ul class="nav nav-tabs col-sm-3">
+                            @if (string.IsNullOrEmpty(friendlySelected))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#/">@Model.Name </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="School" asp-action="SchoolDetail" asp-route-friendlyName="@Model.FriendlyName" asp-route-detailfriendlyName="">@Model.Name </a>
+                                </li>
+                            }
+                            @foreach (var item in details)
+                            {
+                                if (item.FriendlyName == friendlySelected)
+                                {
+                                    selectedItem = item;
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="#/">@item.Title </a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-controller="School" asp-action="SchoolDetail" asp-route-friendlyName="@Model.FriendlyName" asp-route-detailfriendlyName="@item.FriendlyName">@item.Title </a>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="tab-pane tab-pane-navigation active">
+                        @if (selectedItem != null)
+                        {
+                            paths = StaticFileOperations.FilePaths(selectedItem.MasterId, "ContentDetail");
+                            <h4>@selectedItem.Title</h4>
+                            <p>
+                                @Html.Raw(selectedItem.Description)
+                            </p>
+                        }
+                        else
+                        {
+                            paths = StaticFileOperations.FilePaths(Model.MasterId, "School");
+                            <h4>@Model.Name</h4>
+                            <p>
+                                @Html.Raw(Model.Description)
+                            </p>
+                        }
+
+                    </div>
+
+                </div>
+                <div class="col-lg-2">
+                    <div class="lightbox" data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
+                        @foreach (var item in paths)
+                        {
+                            <a class="d-inline-block img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon mb-1 me-1" href="@item">
+                                <img class="img-fluid" src="@item" alt="@Model.Name" width="110" height="110">
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<section class="section section-custom-map lazyload" data-src-bg="~/img/map.png" style="background-color: transparent; background-position: center 0; background-repeat: no-repeat;">
+    <section class="call-to-action with-borders with-button-arrow">
+        <div class="col-sm-9 col-lg-9">
+            <div class="call-to-action-content px-5">
+                <h3>@(Localizer["programsection4"])</h3>
+                <p class="mb-0">@(Localizer["programsection5"])</p>
+            </div>
+        </div>
+        <div class="col-sm-3 col-lg-3">
+            <div class="call-to-action-btn">
+                <a asp-action="Contact" asp-controller="SiteConfig" target="_blank" class="btn btn-modern text-2 btn-primary">@(Localizer["menu.contact"])</a><span class="arrow hlb d-none d-md-block" data-appear-animation="rotateInUpLeft" style="left: 100%; top: -32px;"></span>
+            </div>
+        </div>
+    </section>
+
+</section>

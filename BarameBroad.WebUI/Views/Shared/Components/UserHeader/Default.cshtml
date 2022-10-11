@@ -1,0 +1,131 @@
+﻿@using BaseEntities.Database
+@using static Extensions.UiExtensions.StaticFileOperations
+@model List<ProgramEntity>
+@{
+    SiteConfig cfg = ViewData["Config"] as SiteConfig;
+    List<SocialNetworkEntity> socials = ViewData["Socials"] as List<SocialNetworkEntity>;
+}
+<header id="header" class="header-transparent" data-plugin-options="{'stickyEnabled': true, 'stickyEnableOnBoxed': true, 'stickyEnableOnMobile': false, 'stickyChangeLogo': false, 'stickyStartAt': 53, 'stickySetTop': '-53px'}">
+    <div class="header-body border-top-0 h-auto box-shadow-none">
+        <div class="header-top header-top-borders">
+            <div class="container h-100">
+                <div class="header-row h-100">
+                    <div class="header-column justify-content-start">
+                        <div class="header-row">
+                            <nav class="header-nav-top">
+                                <ul class="nav nav-pills">
+
+                                    <li class="nav-item py-2 d-none d-sm-inline-flex pe-2">
+                                        <span class="ps-0 font-weight-semibold text-color-default text-2-5">@cfg.Address</span>
+                                    </li>
+                                    <li class="nav-item py-2 pe-2">
+                                        <a href="tel:@cfg.PhoneNumberFormat" class="text-color-default text-2-5 text-color-hover-primary font-weight-semibold">@cfg.PhoneNumber</a>
+                                    </li>
+                                    <li class="nav-item py-2 d-none d-md-inline-flex">
+                                        <a href="@cfg.MailAddress" class="text-color-default text-2-5 text-color-hover-primary font-weight-semibold">@cfg.MailAddress</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="header-column justify-content-end">
+                        <div class="header-row">
+                            <nav class="header-nav-top">
+                                <ul class="nav nav-pills p-relative bottom-2">
+                                    @foreach (var item in socials)
+                                    {
+                                        <li class="nav-item py-2 d-none d-lg-inline-flex">
+                                            <a href="@item.Link" target="_blank" class="text-color-dark text-color-hover-primary text-3 anim-hover-translate-top-5px transition-2ms"><i class="@item.Icon fab text-3 p-relative top-1"></i></a>
+                                        </li>
+                                    }
+                                    @await Component.InvokeAsync("UserLang")
+
+
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-container header-container-height-sm container p-static">
+            <div class="header-row">
+                <div class="header-column">
+                    <div class="header-row">
+                        <div class="header-logo">
+                            <a asp-action="Index" asp-controller="Home">
+                                <img alt="@cfg.SiteName" width="123" height="70" src="@await StaticFileOperations.FirstImagePath(StaticFileTypes.Logo.ToString())">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-column justify-content-end">
+                    <div class="header-row">
+                        <div class="header-nav header-nav-links">
+                            <div class="header-nav-main header-nav-main-square header-nav-main-dropdown-no-borders header-nav-main-dropdown-border-radius header-nav-main-text-capitalize header-nav-main-text-size-4 header-nav-main-arrows header-nav-main-full-width-mega-menu header-nav-main-mega-menu-bg-hover header-nav-main-effect-2">
+                                <nav class="collapse">
+                                    <ul class="nav nav-pills" id="mainNav">
+                                        <li>
+                                            <a class="nav-link text-hover-tertiary" asp-action="Index" asp-controller="Home">
+                                                @(Localizer["menu.home"])
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="nav-link text-hover-tertiary" asp-action="Index" asp-controller="SiteConfig">
+                                                @(Localizer["menu.about"])
+                                            </a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a class="nav-link dropdown-toggle" asp-action="Index" asp-controller="Program">
+                                                @(Localizer["menu.programs"])
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                @foreach (var item in Model)
+                                                {
+                                                    <li>
+                                                        <a asp-action="ProgramDetail" asp-controller="Program" asp-route-friendlyName="@item.FriendlyName" class="dropdown-item">@item.Name</a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="nav-link text-hover-tertiary" asp-action="Index" asp-controller="Country">
+                                                @(Localizer["menu.countrydict"])
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="nav-link text-hover-tertiary" asp-action="Index" asp-controller="Team">
+                                                @(Localizer["menu.team"])
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="nav-link text-hover-tertiary" asp-action="Index" asp-controller="BlogCategory">
+                                                @(Localizer["menu.blog"])
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="nav-link text-hover-tertiary" asp-action="Index" asp-controller="Faq">
+                                                @(Localizer["menu.sss"])
+                                            </a>
+                                        </li>
+                                        <li class="d-lg-none">
+                                            <a class="nav-link active" asp-action="Contact" asp-controller="SiteConfig">
+                                                @(Localizer["menu.contact"])
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </nav>
+                            </div>
+                            <a asp-action="Contact" asp-controller="SiteConfig" class="btn btn-modern btn-primary btn-outline btn-arrow-effect-1 text-capitalize text-2-5 ms-3 me-2 d-block d-md-none d-xl-block anim-hover-translate-right-5px transition-2ms">@(Localizer["menu.contact"]) <i class="fas fa-arrow-right ms-2"></i></a>
+                            <button class="btn header-btn-collapse-nav" data-bs-toggle="collapse" data-bs-target=".header-nav-main nav">
+                                <i class="fas fa-bars"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+

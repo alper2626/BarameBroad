@@ -1,0 +1,99 @@
+﻿@using BaseEntities.Database
+@model SiteConfig
+@{
+    ViewData["Title"] = Localizer["menu.about"];
+    List<SocialNetworkEntity> socials = ViewData["Socials"] as List<SocialNetworkEntity>;
+    var paths = StaticFileOperations.FilePaths(Guid.Parse("C5073B7B-4C66-4B12-AE40-E3F9E06949EB"), "SiteConfig");
+
+    SeoEntity seoModel = new SeoEntity
+            {
+                Description = "barem abroad hakkında genel bilgileri bu sayfadan ögrenebilirsiniz.",
+                Keywords = $"barem abroad hakkında,hakkımızda,iletisim,barem abroad iletisim,biz kimiz,barem abroad biz kimiz",
+                Title = "Hakkımızda"
+            };
+}
+@section head
+ {
+     @await Component.InvokeAsync("CustomSeo", new { model = seoModel })
+ }
+
+<section class="page-header page-header-modern bg-color-quaternary p-relative">
+    <div class="container">
+        <div class="row py-5">
+            <div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+                <h1 class="text-color-dark font-weight-bold">@(Localizer["aboutsection1"])</h1>
+            </div>
+            <div class="col-md-4 order-1 order-md-2 align-self-center">
+                <ul class="breadcrumb d-flex justify-content-md-end text-3-5">
+                    <li><a asp-controller="Home" asp-action="Index" class="text-color-default text-color-hover-primary text-decoration-none">@(Localizer["menu.home"])</a></li>
+                    <li class="active">@(Localizer["menu.about"])</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container pt-4 pb-5 mb-5">
+    <div class="row">
+
+        <div class="row py-4 mb-2">
+            <div class="col-md-7 order-2">
+                <div class="overflow-hidden">
+                    <h2 class="text-color-dark font-weight-bold text-12 mb-2 pt-0 mt-0 appear-animation" data-appear-animation="maskUp" data-appear-animation-delay="300">Barem Abroad</h2>
+                </div>
+                <div class="overflow-hidden mb-3">
+                    <p class="font-weight-bold text-primary text-uppercase mb-0 appear-animation" data-appear-animation="maskUp" data-appear-animation-delay="500">@(Localizer["menu.about"])</p>
+                </div>
+                <p class="lead appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="700">
+                    @Html.Raw(Model.AboutUs)
+                </p>
+                <p class="pb-3 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="800">Consectetur adipiscing elit. Aliquam iaculis sit amet enim ac sagittis. Curabitur eget leo varius, elementum mauris eget, egestas quam.</p>
+                <hr class="solid my-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="900">
+                <div class="row align-items-center appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="1000">
+                    <div class="col-lg-6">
+                    </div>
+                    <div class="col-sm-6 text-lg-end my-4 my-lg-0">
+                        <strong class="text-uppercase text-1 me-3 text-dark">@(Localizer["aboutsection2"])</strong>
+                        <ul class="social-icons float-lg-end">
+                            @foreach (var item in socials)
+                            {
+                                <li class="social-icons-linkedin">
+                                    <a href="@item.Link" target="_blank" class="text-color-dark text-color-hover-primary text-3 anim-hover-translate-top-5px transition-2ms"><i class="@item.Icon text-3 p-relative top-1"></i></a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5 order-md-2 mb-4 mb-lg-0" data-appear-animation="fadeInRightShorter">
+
+                @for (var j = 0; j < paths.Count(); j++)
+                {
+                    if (j == 0)
+                    {
+                        <a data-fancybox="gallery" href="@paths[j]" data-caption="@Model.SiteName">
+                            <span class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-lighten">
+                                <span class="thumb-info-wrapper symbol symbol-150 mr-3">
+                                    <img src="@paths[j]" class="img-fluid" alt="@Model.SiteName">
+                                    <span class="thumb-info-action">
+                                        <span class="thumb-info-action-icon"><i class="fas fa-plus"></i></span>
+                                    </span>
+                                </span>
+                            </span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a data-fancybox="gallery" href="@paths[j]" data-caption="@Model.SiteName" style="display:none">
+                            <div class="symbol symbol-150 mr-3">
+                                <img src="@paths[j]" class="img-fluid" alt="@Model.SiteName">
+                            </div>
+                        </a>
+
+                    }
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

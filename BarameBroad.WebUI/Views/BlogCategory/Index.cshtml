@@ -1,0 +1,172 @@
+﻿@{
+    ViewData["Title"] = Localizer["menu.blog"];
+    List<BlogEntity> blogs = ViewData["BlogList"] as List<BlogEntity>;
+    BlogFilterModel filters = ViewData["Filters"] as BlogFilterModel;
+    var fullPath = string.Format("{0}://{1}{2}", Context.Request.Scheme, Context.Request.Host, Context.Request.Path);
+
+    var selected = Model.FirstOrDefault(w => w.FriendlyName == filters.BlogCategoryFriendlyName);
+
+    SeoEntity seoModel = new SeoEntity
+            {
+                Description = "isimizin tüm detaylarını bloglarımızdan ögrenebilirsiniz.",
+                Keywords = $"blog yazilari",
+                Title = "Tüm Bloglar"
+            };
+
+}
+@if (selected != null)
+{
+    ViewData["Title"] = $"{selected.Name} Blogları";
+    @section head
+    {
+        @await Component.InvokeAsync("Seo", new { relatedId = selected.Id })
+    }
+}
+else
+{
+    @section head
+    {
+        @await Component.InvokeAsync("CustomSeo", new { model = seoModel })
+    }
+}
+
+@using System.Text.RegularExpressions
+@using WebUI.Models.FilterModel
+@using BaseEntities.Database
+@model List<BlogCategory>
+
+<section class="page-header page-header-modern bg-color-quaternary p-relative">
+    <div class="container">
+        <div class="row py-5">
+            <div class="col-md-7 order-2 order-md-1 align-self-center p-static">
+
+                @if (ViewData["selectedCategory"] != null)
+                {
+                    <h1 class="text-color-dark font-weight-bold">
+                        @ViewData["selectedCategory"]
+                    </h1>
+                }
+                else
+                {
+                    <h1 class="text-color-dark font-weight-bold">
+                        Tümü
+                    </h1>
+                }
+
+            </div>
+            <div class="col-md-4 order-1 order-md-2 align-self-center">
+                <ul class="breadcrumb d-flex justify-content-md-end text-3-5">
+                    <li><a asp-controller="Home" asp-action="Index" class="text-color-default text-color-hover-primary text-decoration-none">@Localizer["menu.home"]</a></li>
+                    @if (ViewData["selectedCategory"] != null)
+                    {
+                        <li><a asp-controller="BlogCategory" asp-action="Index" asp-route-friendlyName="" class="text-color-default text-color-hover-primary text-decoration-none">@Localizer["menu.blog"]</a></li>
+                        <li class="active">@ViewData["selectedCategory"]</li>
+                    }
+                    else
+                    {
+                        <li><a class="text-color-default text-color-hover-primary text-decoration-none">@Localizer["menu.blog"]</a></li>
+                        <li class="active"><a class="text-color-default text-color-hover-primary text-decoration-none" href="#/"> Tümü </a></li>
+                    }
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container py-4">
+
+    <div class="row">
+        <div class="col-lg-3">
+            <aside class="sidebar">
+                <form asp-controller="BlogCategory" asp-action="Index" method="get">
+                    <div class="input-group mb-3 pb-1">
+                        <input type="hidden" name="BlogCategoryFriendlyName" value="@filters.BlogCategoryFriendlyName" />
+                        <input class="form-control text-1" placeholder="@Localizer["search"]" name="BlogName" type="text">
+                        <button type="submit" class="btn btn-dark text-1 p-2"><i class="fas fa-search m-2"></i></button>
+                    </div>
+                </form>
+                <h5 class="font-weight-semi-bold pt-4">@Localizer["blogcategories"]</h5>
+                <ul class="nav nav-list flex-column mb-5">
+                    @foreach (var item in Model)
+                    {
+                        if (ViewData["categoryName"] != null && ViewData["categoryName"].ToString() == item.FriendlyName)
+                        {
+                            <li class="nav-item active"><a class="nav-link" href="#/">@item.Name</a></li>
+                            continue;
+                        }
+                        <li class="nav-item"><a class="nav-link" asp-controller="BlogCategory" asp-action="Index" asp-route-BlogCategoryFriendlyName="@item.FriendlyName">@item.Name</a></li>
+                    }
+                </ul>
+            </aside>
+        </div>
+        <div class="col-lg-9">
+            <div class="blog-posts">
+                <div class="row px-3">
+                    @foreach (var item in blogs)
+                    {
+
+                        <div class="col-sm-6">
+                            <article class="post post-medium border-0 pb-0 mb-5">
+                                <div class="post-image">
+                                    <a asp-action="BlogDetail" asp-controller="Blog" asp-route-friendlyName="@item.FriendlyName">
+                                        <img src="@await StaticFileOperations.FirstImagePath(item.MasterId,"Blog")" class="img-fluid img-thumbnail img-thumbnail-no-borders rounded-0" alt="@item.Name" />
+                                    </a>
+                                </div>
+
+                                <div class="post-content">
+
+                                    <h2 class="font-weight-semibold text-5 line-height-6 mt-3 mb-2"><a asp-action="BlogDetail" asp-controller="Blog" asp-route-friendlyName="@item.FriendlyName">@item.Name</a></h2>
+                                    @if (item.Description.Length > 90)
+                                    {
+                                        <p>
+                                            @Regex.Replace(Html.Raw(item.Description).ToString()?.Substring(0,90), "<.*?>", String.Empty)
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <p>
+                                            @Html.Raw(item.Description)
+                                        </p>
+                                    }
+
+
+                                    <div class="post-meta">
+                                        <span><i class="far fa-user"></i> By <a href="#/">Barem ABroad</a> </span>
+                                        <span class="d-block mt-2"><a asp-action="BlogDetail" asp-controller="Blog" asp-route-friendlyName="@item.FriendlyName" class="btn btn-xs btn-light text-1 text-uppercase">@Localizer["readmore"]</a></span>
+                                    </div>
+
+                                </div>
+                            </article>
+                        </div>
+
+
+
+                    }
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <form asp-controller="BlogCategory" asp-action="Index" method="get">
+                            <input type="hidden" name="BlogName" value="@filters.BlogName" />
+
+                            <ul class="pagination pagination-rounded pagination-md justify-content-center">
+                                @if (filters.Page > 1)
+                                {
+                                    <li class="page-item"><a class="page-link" href='@string.Concat(fullPath,$"?BlogName={filters.BlogName}&Page={(filters.Page-1)}")' data-cursor-effect-hover="fit"><i class="fas fa-angle-left"></i></a></li>
+                                }
+                                @if (blogs.Count == 6)
+                                {
+                                    <li class="page-item"><a class="page-link" href='@string.Concat(fullPath,$"?BlogName={filters.BlogName}&Page={(filters.Page+1)}")' data-cursor-effect-hover="fit"><i class="fas fa-angle-right"></i></a></li>
+                                }
+
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>

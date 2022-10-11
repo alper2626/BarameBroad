@@ -1,0 +1,148 @@
+﻿@using BarameBroad.WebUI.Localizer
+@using BaseEntities.Database
+@model MasterSiteConfig
+
+@{
+    ViewData["Title"] = "Site Bilgilerini Güncelle";
+    string paneClass = "show active";
+    string linkClass = "active";
+}
+<!--begin::Card-->
+<div class="card card-custom card-sticky" id="kt_page_sticky_card">
+    <div class="card-header card-header-tabs-line">
+        <div class="card-title">
+            <h3 class="card-label">Site Bilgileri</h3>
+        </div>
+        <div class="card-toolbar">
+            <ul class="nav nav-tabs nav-bold nav-tabs-line">
+                @for (var i = 0; i < Languages.All.Count; i++)
+                {
+                    if (i == 0)
+                    {
+                        linkClass = "active";
+                    }
+                    else
+                    {
+                        linkClass = "";
+                    }
+
+                    <li class="nav-item">
+                        <a class="nav-link @linkClass" data-toggle="tab" href="#kt_tab_pane_@Languages.All[i].Split("-")[0]">
+                            <span class="nav-text">@Languages.All[i]</span>
+                        </a>
+                    </li>
+                }
+
+            </ul>
+        </div>
+        <div class="card-toolbar">
+            <div class="dropdown dropdown-inline">
+                <a target="_blank" href="@Url.Action("UpdateSeo", "Seo",new{area="Seo"})?relatedId=@Model.Id&key=Site&show=Site" class="navi-link">
+
+                    <span class="navi-text">Seo Bilgilerini Güncelle</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <form class="kt-form" method="post" asp-area="SiteConfig" asp-controller="SiteConfig" asp-action="UpdateSiteConfig" id="upload-imagezone" data-redirect="@Url.Action("Index","SiteConfig",new{Area="SiteConfig"})">
+        @Html.HiddenFor(w=>w.Id)
+        <div class="card-body">
+            <div class="tab-content">
+
+                @for (var i = 0; i < Languages.All.Count; i++)
+                {
+                    @Html.HiddenFor(w=>w.Childrens[i].Id)
+                    @Html.HiddenFor(w=>w.Childrens[i].Lang)
+                    if (i == 0)
+                    {
+                        paneClass = "show active";
+                    }
+                    else
+                    {
+                        paneClass = "";
+                    }
+                    <div class="tab-pane fade @paneClass" id="kt_tab_pane_@Languages.All[i].Split("-")[0]" role="tabpanel" aria-labelledby="kt_tab_pane_@Languages.All[i].Split("-")[0]">
+
+                        <div class="form-group">
+                            @Html.LabelFor(s => s.Childrens[i].SiteName, "Site Adı")
+                            @Html.TextBoxFor(s => s.Childrens[i].SiteName, new { @class = "form-control", placeholder = "Site Adı Girin" })
+                            @Html.ValidationMessageFor(s => s.Childrens[i].SiteName)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(s => s.Childrens[i].PhoneNumber, "İletişim Numarası")
+                            @Html.TextBoxFor(s => s.Childrens[i].PhoneNumber, new { @class = "form-control", placeholder = "İletişim Numarası Girin.", id = "phone" })
+                            @Html.ValidationMessageFor(s => s.Childrens[i].PhoneNumber)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(s => s.Childrens[i].MailAddress, "Mail Adresi")
+                            @Html.TextBoxFor(s => s.Childrens[i].MailAddress, new { @class = "form-control", placeholder = "Mail Adresi Girin" })
+                            @Html.ValidationMessageFor(s => s.Childrens[i].MailAddress)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(s => s.Childrens[i].Address, "Adres")
+                            @Html.TextAreaFor(s => s.Childrens[i].Address, new { @class = "form-control", placeholder = "Address Girin", rows = "3" })
+                            @Html.ValidationMessageFor(s => s.Childrens[i].Address)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(s => s.Childrens[i].AboutUs, "Hakkımızda")
+                            @Html.TextAreaFor(s => s.Childrens[i].AboutUs, new { placeholder = "Hakkımızda Yazısı Girin", @class = "editor" })
+                            @Html.ValidationMessageFor(s => s.Childrens[i].AboutUs)
+                        </div>
+
+                    </div>
+                }
+                <hr />
+                <h6>Anasayfa Sayaç Değerleri</h6>
+                <hr />
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        @Html.LabelFor(s => s.FirstCounterText, "1. Sayaç Adı")
+                        @Html.TextBoxFor(s => s.FirstCounterText, new { @class = "form-control"})
+                        @Html.ValidationMessageFor(s => s.FirstCounterText)
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.LabelFor(s => s.FirstCounterValue, "1. Sayaç Değeri")
+                        @Html.TextBoxFor(s => s.FirstCounterValue, new { @class = "form-control",data_number="true" })
+                        @Html.ValidationMessageFor(s => s.FirstCounterValue)
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        @Html.LabelFor(s => s.SecondCounterText, "2. Sayaç Adı")
+                        @Html.TextBoxFor(s => s.SecondCounterText, new { @class = "form-control"})
+                        @Html.ValidationMessageFor(s => s.SecondCounterText)
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.LabelFor(s => s.SecondCounterValue, "2. Sayaç Değeri")
+                        @Html.TextBoxFor(s => s.SecondCounterValue, new { @class = "form-control",data_number="true" })
+                        @Html.ValidationMessageFor(s => s.SecondCounterValue)
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        @Html.LabelFor(s => s.ThirdCounterText, "3. Sayaç Adı")
+                        @Html.TextBoxFor(s => s.ThirdCounterText, new { @class = "form-control"})
+                        @Html.ValidationMessageFor(s => s.ThirdCounterText)
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.LabelFor(s => s.ThirdCounterValue, "3. Sayaç Değeri")
+                        @Html.TextBoxFor(s => s.ThirdCounterValue, new { @class = "form-control",data_number="true" })
+                        @Html.ValidationMessageFor(s => s.ThirdCounterValue)
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <h6>Hakkımızda Resimler <small>(ilk resim Anasayfada gözükecektir.) </small></h6>
+            <hr />
+            <div class="form-group">
+                <div data-partial="@Url.Action("FilePartial", "File", new {Area="Admin",itemId = Model.Id, type = "SiteConfig"})"></div>
+            </div>
+        </div>
+    </form>
+    <div class="card-footer">
+        <div class="kt-form__actions">
+            <button type="submit" class="btn btn-primary w-100">Kaydet</button>
+        </div>
+    </div>
+</div>
+<!--end::Card-->

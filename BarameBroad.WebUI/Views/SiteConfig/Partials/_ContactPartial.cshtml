@@ -1,0 +1,58 @@
+﻿@using WebUI.Models
+@model PostContactForm
+
+<section class="parallax section section-text-light section-parallax bg-primary m-0" data-plugin-parallax data-plugin-options="{'speed': 1.5}" data-image-src="/img/parallax-1.jpg">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col">
+                <div class="feature-box align-items-center border-0 float-lg-end mb-4 mb-lg-0 appear-animation" data-appear-animation="fadeInRightShorterPlus" data-appear-animation-delay="300">
+                    <div class="feature-box-icon bg-transparent">
+                        <i class="icons icon-phone text-6 text-color-light"></i>
+                    </div>
+                    <div class="feature-box-info line-height-2 ps-1">
+                        <span class="d-block text-1 text-light font-weight-semibold text-color-default ws-nowrap">@(Localizer["contactsection2"])</span>
+                        <strong class="text-4-5"><a href="tel:+905073458798" class="text-color-light text-decoration-none ws-nowrap">0 (507) 345 87 98</a></strong>
+                    </div>
+                </div>
+                <h2 class="text-color-light font-weight-bold text-8 pb-4 mb-0 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200">@(Localizer["contactsection1"])</h2>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col">
+                <div class="border-top border-color-light-5 text-light pt-4 appear-animation" data-appear-animation="fadeIn" data-appear-animation-delay="300">
+                    <form method="post" asp-controller="SiteConfig" asp-action="SendMail">
+                        <div class="row align-items-center">
+                            <div class="col-12 mb-3 mb-lg-0 col-lg">
+                                <h2 class="text-color-light font-weight-bold text-5 mb-0">@(Localizer["contactsection3"])</h2>
+                            </div>
+                            <div class="col-12 mb-3 mb-lg-0 col-lg">
+                                @Html.TextBoxFor(w=>w.Subject, new{placeholder=Localizer["contactsection4"].Value,aria_label=Localizer["contactsection4"].Value,@class="form-control text-3 h-auto py-3 line-height-1 border-0"})
+                            </div>
+                            <div class="col-12 mb-3 mb-lg-0 col-lg">
+                                @Html.TextBoxFor(w=>w.FullName, new{placeholder=Localizer["contactsection5"].Value,aria_label=Localizer["contactsection5"].Value,@class="form-control text-3 h-auto py-3 line-height-1 border-0"})
+                            </div>
+                            <div class="col-12 mb-3 mb-lg-0 col-lg">
+                                @Html.TextBoxFor(w=>w.PhoneNumber, new{placeholder=Localizer["contactsection6"].Value,aria_label=Localizer["contactsection6"].Value,@class="form-control text-3 h-auto py-3 line-height-1 border-0"})
+                            </div>
+                            <div class="col-12 mb-3 mb-lg-0 col-lg">
+                                <div class="d-grid gap-2">
+                                    <button type="submit" class="btn btn-modern btn-dark btn-arrow-effect-1 text-capitalize text-2-5 px-5 py-3 anim-hover-translate-top-5px transition-2ms">@(Localizer["sendbutton"]) <i class="fas fa-arrow-right ms-2"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    $(function(){
+        if ($.isFunction($.fn['themePluginAnimate']) && $('[data-appear-animation]').length) {
+            theme.fn.dynIntObsInit( '[data-appear-animation], [data-appear-animation-svg]', 'themePluginAnimate', theme.PluginAnimate.defaults );
+        }
+
+    });
+</script>
+</section>
+
+

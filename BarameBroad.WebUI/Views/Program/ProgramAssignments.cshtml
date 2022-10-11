@@ -1,0 +1,156 @@
+﻿@{
+    ViewData["Title"] = Localizer["detailbutton"];
+    List<ContentDetail> details = ViewData["Details"] as List<ContentDetail>;
+    var relations = ViewData["Relations"] as List<ProgramSpResponse>;
+    List<string> paths = new List<string>();
+
+}
+@section head{
+    @await Component.InvokeAsync("Seo",new{relatedId=Model.MasterId});
+}
+
+@using BaseEntities
+@using BaseEntities.Database
+@model ProgramEntity
+<section class="page-header page-header-modern bg-color-quaternary p-relative mb-0">
+    <div class="container">
+        <div class="row py-5">
+            <div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+
+                <h1 class="text-color-dark font-weight-bold">
+                    @Localizer["where"]
+                </h1>
+
+            </div>
+            <div class="col-md-4 order-1 order-md-2 align-self-center">
+                <ul class="breadcrumb d-flex justify-content-md-end text-3-5">
+                    <li><a asp-controller="Home" asp-action="Index" class="text-color-default text-color-hover-primary text-decoration-none">@Localizer["menu.home"]</a></li>
+                    <li><a asp-controller="Program" asp-action="Index" class="text-color-default text-color-hover-primary text-decoration-none">@Localizer["menu.programs"]</a></li>
+                    <li class="active">@Model.Name</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<div data-partial="/Program/altprogramlar/@Model.MasterId" class="text-center w-100" style="border: 1px dashed grey;">
+    <div>
+        <div class="col-12">
+            <div>
+                <h4> @Localizer["loading"] </h4>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container py-4">
+
+    <div class="row mt-5">
+        <div class="col">
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="tabs tabs-vertical tabs-right tabs-navigation tabs-navigation-simple">
+                        <ul class="nav nav-tabs col-sm-3">
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Program" asp-action="ProgramDetail" asp-route-friendlyName="@Model.FriendlyName" asp-route-detailfriendlyName="">@Model.Name </a>
+                            </li>
+
+                            @foreach (var item in details)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Program" asp-action="ProgramDetail" asp-route-friendlyName="@Model.FriendlyName" asp-route-detailfriendlyName="@item.FriendlyName">@item.Title </a>
+                                </li>
+                            }
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#/">@Localizer["where"] </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="tab-pane tab-pane-navigation active table-responsive">
+                        <h4>@Localizer["where"]</h4>
+                        <table class="table">
+                            <tr>
+                                <th>@Localizer["countries"]</th>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    @foreach (var item in relations.Where(w => w.EntityRelationType == 2))
+                                    {
+                                        <a href="@item.Link" target="_blank" class="btn btn-tertiary btn-with-arrow mb-2">
+                                            @item.Name <span><i class="fas fa-chevron-right"></i></span>
+                                        </a>
+                                    }
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>@Localizer["cities"]</th>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    @foreach (var item in relations.Where(w => w.EntityRelationType == 1))
+                                    {
+                                        <a href="@item.Link" target="_blank" class="btn btn-secondary btn-with-arrow mb-2" style="background-color:transparent!important">
+                                            @item.Name <span><i class="fas fa-chevron-right"></i></span>
+                                        </a>
+                                    }
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>@Localizer["schools"]</th>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    @foreach (var item in relations.Where(w => w.EntityRelationType == 0))
+                                    {
+                                        <a href="@item.Link" target="_blank" class="btn btn-primary btn-with-arrow mb-2" style="background-color:transparent!important">
+                                            @item.Name <span><i class="fas fa-chevron-right"></i></span>
+                                        </a>
+                                    }
+                                </td>
+                            </tr>
+
+                        </table>
+
+                    </div>
+
+                </div>
+                <div class="col-lg-2">
+                    <div class="lightbox" data-plugin-options="{'delegate': 'a', 'type': 'image', 'gallery': {'enabled': true}, 'mainClass': 'mfp-with-zoom', 'zoom': {'enabled': true, 'duration': 300}}">
+                        @foreach (var item in paths)
+                        {
+                            <a class="d-inline-block img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon mb-1 me-1" href="@item">
+                                <img class="img-fluid" src="@item" alt="@Model.Name" width="110" height="110">
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<section class="section section-custom-map lazyload" data-src-bg="~/img/map.png" style="background-color: transparent; background-position: center 0; background-repeat: no-repeat;">
+    <section class="call-to-action with-borders with-button-arrow">
+        <div class="col-sm-9 col-lg-9">
+            <div class="call-to-action-content px-5">
+                <h3>@(Localizer["programsection4"])</h3>
+                <p class="mb-0">@(Localizer["programsection5"])</p>
+            </div>
+        </div>
+        <div class="col-sm-3 col-lg-3">
+            <div class="call-to-action-btn">
+                <a asp-action="Contact" asp-controller="SiteConfig" target="_blank" class="btn btn-modern text-2 btn-primary">@(Localizer["menu.contact"])</a><span class="arrow hlb d-none d-md-block" data-appear-animation="rotateInUpLeft" style="left: 100%; top: -32px;"></span>
+            </div>
+        </div>
+    </section>
+
+</section>

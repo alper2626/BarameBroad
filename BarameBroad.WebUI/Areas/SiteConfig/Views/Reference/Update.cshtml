@@ -1,0 +1,43 @@
+﻿@using BaseEntities.Database
+@model Reference
+
+@{
+    ViewData["Title"] = "Referans Düzenle";
+}
+
+<div class="card card-custom mx-4">
+    <div class="card-header">
+        <div class="card-title">
+            <h3 class="card-label">
+                Referans Düzenle
+            </h3>
+        </div>
+    </div>
+    <div class="card-body">
+
+        <!--begin::Form-->
+        <form class="kt-form" method="post" asp-area="SiteConfig" asp-controller="Reference" asp-action="Update" id="upload-imagezone" data-redirect="@Url.Action("Index","Reference",new{Area="SiteConfig"})">
+            @Html.HiddenFor(s => s.Id)
+            <div class="card-body">
+                <div class="kt-section kt-section--first">
+                    <div class="form-group">
+                        @Html.LabelFor(s => s.ReferenceName, "Referans Adı")
+                        @Html.TextBoxFor(s => s.ReferenceName, new { @class = "form-control", placeholder = "Referans Adı Girin." })
+                        @Html.ValidationMessageFor(s => s.ReferenceName)
+                    </div>
+                    <div class="form-group">
+                        <div data-partial="@Url.Action("FilePartial", "File", new {Area="Admin",itemId = Model.Id, type = "Reference"})"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="kt-form__actions">
+                    <button type="submit" class="btn btn-primary w-100">Kaydet</button>
+                </div>
+            </div>
+        </form>
+
+        <!--end::Form-->
+
+    </div>
+</div>

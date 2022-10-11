@@ -1,0 +1,89 @@
+﻿@using BarameBroad.WebUI.Localizer
+@using BaseEntities.Database
+@model MasterSeoEntity
+
+@{
+    ViewData["Title"] = "Seo Düzenle";
+    string paneClass = "show active";
+    string linkClass = "active";
+}
+<!--begin::Card-->
+<div class="card card-custom card-sticky" id="kt_page_sticky_card">
+    <div class="card-header card-header-tabs-line">
+        <div class="card-title">
+            <h3 class="card-label">Seo Düzenle</h3>
+        </div>
+        <div class="card-toolbar">
+            <ul class="nav nav-tabs nav-bold nav-tabs-line">
+                @for (var i = 0; i < Languages.All.Count; i++)
+                {
+                    if (i == 0)
+                    {
+                        linkClass = "active";
+                    }
+                    else
+                    {
+                        linkClass = "";
+                    }
+
+                    <li class="nav-item">
+                        <a class="nav-link @linkClass" data-toggle="tab" href="#kt_tab_pane_@Languages.All[i].Split("-")[0]">
+                            <span class="nav-text">@Languages.All[i]</span>
+                        </a>
+                    </li>
+                }
+
+            </ul>
+        </div>
+    </div>
+    <form class="kt-form" method="post" asp-area="Seo" asp-controller="Seo" asp-action="UpdateSeo">
+        <div class="card-body">
+            <div class="tab-content">
+
+                @Html.HiddenFor(w=>w.Id)
+                @Html.HiddenFor(w=>w.TableName)
+                @Html.HiddenFor(w=>w.RelatedId)
+
+                @for (var i = 0; i < Languages.All.Count; i++)
+                {
+                    @Html.HiddenFor(w=>w.Childrens[i].Id)
+                    @Html.HiddenFor(w=>w.Childrens[i].Lang)
+                    if (i == 0)
+                    {
+                        paneClass = "show active";
+                    }
+                    else
+                    {
+                        paneClass = "";
+                    }
+                    <div class="tab-pane fade @paneClass" id="kt_tab_pane_@Languages.All[i].Split("-")[0]" role="tabpanel" aria-labelledby="kt_tab_pane_@Languages.All[i].Split("-")[0]">
+                        <div class="form-group">
+                            @Html.LabelFor(s => s.Childrens[i].Title, "Sayfa Başlığı")
+                            @Html.TextBoxFor(s => s.Childrens[i].Title, new { @class = "form-control", placeholder = "Sayfa Başlığı Girin." })
+                            @Html.ValidationMessageFor(s => s.Childrens[i].Title)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(s => s.Childrens[i].Keywords, "Anahtar Kelimeler")
+                            @Html.TextAreaFor(s => s.Childrens[i].Keywords, new { @class = "form-control", placeholder = "Anahtar Kelimeler , ile ayırın", rows = "3" })
+                            @Html.ValidationMessageFor(s => s.Childrens[i].Keywords)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(s => s.Childrens[i].Description, "Google Açıklaması")
+                            @Html.TextAreaFor(s => s.Childrens[i].Description, new { @class = "form-control", placeholder = "Arama Sonuçlarında Gözükecek Açıklama Metni Girin", rows = "3" })
+                            @Html.ValidationMessageFor(s => s.Childrens[i].Description)
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="kt-form__actions">
+                <button type="submit" class="btn btn-primary w-100">Kaydet</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+<!--end::Card-->

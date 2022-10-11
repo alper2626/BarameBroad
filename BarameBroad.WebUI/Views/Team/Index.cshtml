@@ -1,0 +1,178 @@
+﻿@using BaseEntities.Database
+@model List<TeamEntity>
+@{
+    ViewData["Title"] = Localizer["menu.team"];
+    SeoEntity seoModel = new SeoEntity
+            {
+                Description = "barem abroad ekibi hakkında genel bilgileri bu sayfadan ögrenebilirsiniz.",
+                Keywords = $"barem abroad hakkında,hakkımızda,iletisim,barem abroad iletisim,biz kimiz,barem abroad biz kimiz,ekibimiz barem abroad ekip",
+                Title = "Ekibimiz"
+            };
+}
+@section head
+ {
+     @await Component.InvokeAsync("CustomSeo", new { model = seoModel })
+ }
+
+<section class="page-header page-header-modern bg-color-quaternary p-relative">
+    <div class="container">
+        <div class="row py-5">
+            <div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+                <h1 class="text-color-dark font-weight-bold">@Localizer["menu.team"]</h1>
+            </div>
+            <div class="col-md-3 order-1 order-md-2 align-self-center">
+                <ul class="breadcrumb d-flex justify-content-md-end text-3-5">
+                    <li><a asp-controller="Home" asp-action="Index" class="text-color-default text-color-hover-primary text-decoration-none">@Localizer["menu.home"]</a></li>
+                    <li class="active">@Localizer["menu.team"]</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container py-4">
+    @for (var i = 0; i < Model.Count(); i++)
+    {
+        @if (i % 2 == 0)
+        {
+
+            <div class="row">
+                <div class="col-md-5 order-md-2 mb-4 mb-lg-0 appear-animation" data-appear-animation="fadeInRightShorter">
+                    @{
+                        var paths = StaticFileOperations.FilePaths(Model[i].MasterId, "Team");
+                    }
+                    @for (var j = 0; j < paths.Count(); j++)
+                    {
+                        if (j == 0)
+                        {
+                            <a data-fancybox="@(i+1)" href="@paths[j]" data-caption="@Model[i].Master.FirstName @Model[i].Master.LastName">
+                                <span class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-lighten">
+                                    <span class="thumb-info-wrapper symbol symbol-150 mr-3">
+                                        <img src="@paths[j]" class="img-fluid" alt="@Model[i].Master.FirstName @Model[i].Master.LastName">
+                                        <span class="thumb-info-action">
+                                            <span class="thumb-info-action-icon"><i class="fas fa-plus"></i></span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </a>
+
+
+                        }
+                        else
+                        {
+                            <a href="@paths[j]" data-fancybox="@(i+1)" data-caption="@Model[i].Master.FirstName @Model[i].Master.LastName" style="display:none">
+                                <img src="@paths[j]" class="img-fluid" alt="@Model[i].Master.FirstName @Model[i].Master.LastName">
+                            </a>
+
+                        }
+                    }
+                </div>
+                <div class="col-md-7 order-2">
+                    <div class="overflow-hidden">
+                        <h2 class="text-color-dark font-weight-bold text-8 mb-0 pt-0 mt-0 appear-animation" data-appear-animation="maskUp" data-appear-animation-delay="300">@Model[i].Master.FirstName @Model[i].Master.LastName.ToUpper()</h2>
+                    </div>
+                    <div class="overflow-hidden mb-3">
+                        <p class="font-weight-bold text-primary text-uppercase mb-0 appear-animation" data-appear-animation="maskUp" data-appear-animation-delay="500">@Model[i].Duty</p>
+                    </div>
+                    <p class="lead appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="700">
+                        @Html.Raw(Model[i].Description)
+                    </p>
+                    <hr class="solid my-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="900">
+                    <div class="row align-items-center appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="1000">
+                        <div class="col-lg-6">
+                        </div>
+                        <div class="col-sm-6 text-lg-end my-4 my-lg-0">
+                            <strong class="text-uppercase text-1 me-3 text-dark">@Localizer["menu.contact"]</strong>
+                            <ul class="social-icons float-lg-end">
+                                <li class="social-icons-facebook"><a href="@Model[i].Master.Facebook" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                <li class="social-icons-instagram"><a href="@Model[i].Master.Instagram" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a></li>
+                                <li class="social-icons-linkedin"><a href="@Model[i].Master.Linkedn" target="_blank" title="Linkedin"><i class="fab fa-linkedin-in"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <hr class="solid my-5">
+                </div>
+            </div>
+        }
+        else
+        {
+
+            <div class="row">
+                <div class="col-md-7 order-2">
+                    <div class="overflow-hidden">
+                        <h2 class="text-color-dark font-weight-bold text-8 mb-0 pt-0 mt-0 appear-animation" data-appear-animation="maskUp" data-appear-animation-delay="300">@Model[i].Master.FirstName @Model[i].Master.LastName.ToUpper()</h2>
+                    </div>
+                    <div class="overflow-hidden mb-3">
+                        <p class="font-weight-bold text-primary text-uppercase mb-0 appear-animation" data-appear-animation="maskUp" data-appear-animation-delay="500">@Model[i].Duty</p>
+                    </div>
+                    <p class="lead appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="700">
+                        @Html.Raw(Model[i].Description)
+                    </p>
+                    <hr class="solid my-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="900">
+                    <div class="row align-items-center appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="1000">
+                        <div class="col-lg-6">
+                        </div>
+                        <div class="col-sm-6 text-lg-end my-4 my-lg-0">
+                            <strong class="text-uppercase text-1 me-3 text-dark">@Localizer["menu.contact"]</strong>
+                            <ul class="social-icons float-lg-end">
+                                <li class="social-icons-facebook"><a href="@Model[i].Master.Facebook" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                <li class="social-icons-instagram"><a href="@Model[i].Master.Instagram" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a></li>
+                                <li class="social-icons-linkedin"><a href="@Model[i].Master.Linkedn" target="_blank" title="Linkedin"><i class="fab fa-linkedin-in"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 order-md-2 mb-4 mb-lg-0 appear-animation" data-appear-animation="fadeInRightShorter">
+                    @{
+                        var paths = StaticFileOperations.FilePaths(Model[i].MasterId, "Team");
+                    }
+                    @for (var j = 0; j < paths.Count(); j++)
+                    {
+                        if (j == 0)
+                        {
+                            <a data-fancybox="@(i+1)" href="@paths[j]" data-caption="@Model[i].Master.FirstName @Model[i].Master.LastName">
+                                <span class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-lighten">
+                                    <span class="thumb-info-wrapper symbol symbol-150 mr-3">
+                                        <img src="@paths[j]" class="img-fluid" alt="@Model[i].Master.FirstName @Model[i].Master.LastName">
+                                        <span class="thumb-info-action">
+                                            <span class="thumb-info-action-icon"><i class="fas fa-plus"></i></span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="@paths[j]" data-fancybox="@(i+1)" data-caption="@Model[i].Master.FirstName @Model[i].Master.LastName" style="display:none">
+                                <img src="@paths[j]" class="img-fluid" alt="@Model[i].Master.FirstName @Model[i].Master.LastName">
+                            </a>
+
+                        }
+                    }
+
+                </div>
+
+
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <hr class="solid my-5">
+                </div>
+            </div>
+        }
+    }
+    @foreach (var item in Model)
+    {
+
+
+    }
+
+</div>
+

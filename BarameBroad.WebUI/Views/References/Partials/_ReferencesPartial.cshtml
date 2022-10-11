@@ -1,0 +1,43 @@
+﻿@using BaseEntities.Database
+@model List<Reference>
+
+
+<section class="section border-0 bg-light m-0">
+
+    <div class="row align-items-center text-center">
+        @foreach (var item in Model)
+        {
+            <div class="col-sm-4 col-lg-2 mb-5 mb-sm-0">
+                <img src="@await StaticFileOperations.FirstImagePath(item.Id,"Reference")" alt="@item.ReferenceName" class="img-fluid" style="max-width: 90px;">
+            </div>
+        }
+
+    </div>
+    @if (Model.Count() > 6)
+    {
+        <div class="text-center pt-3">
+        <a asp-controller="References" asp-action="Index" class="btn btn-primary btn-with-arrow mb-2 background-transparent">
+            @(Localizer["readmore"])
+            <span>
+                <i class="fas fa-chevron-right"></i>
+            </span>
+        </a>
+
+    </div>
+    }
+
+</section>
+
+
+<script type="text/javascript">
+    $(function(){
+        if ($.isFunction($.fn['themePluginAnimate']) && $('[data-appear-animation]').length) {
+            theme.fn.dynIntObsInit( '[data-appear-animation], [data-appear-animation-svg]', 'themePluginAnimate', theme.PluginAnimate.defaults );
+        }
+            if ($.isFunction($.fn['themePluginCarousel']) && $('[data-plugin-carousel]:not(.manual), .owl-carousel:not(.manual)').length) {
+            theme.fn.intObsInit( '[data-plugin-carousel]:not(.manual), .owl-carousel:not(.manual)', 'themePluginCarousel' );
+        }
+
+    });
+</script>
+

@@ -1,0 +1,29 @@
+﻿@using Extensions.UiExtensions
+
+@{
+    ViewData["Title"] = "Fav İcon Düzenle";
+}
+
+
+<form asp-controller="SiteConfig" asp-action="PostFav" asp-area="SiteConfig" method="post" enctype="multipart/form-data" id="upload-imagezone" data-redirect="@Url.Action("UploadFav","SiteConfig",new{Area="SiteConfig"})">
+    <div class="card card-custom mx-4">
+        <div class="card-header">
+            <div class="card-title">
+                <h3 class="card-label">
+                    Fav İcon Düzenle
+                </h3>
+            </div>
+        </div>
+        <div class="card-body">
+            
+            <div data-partial="@Url.Action("FileBasePartial","File",new{Area="Admin"})?type=@StaticFileOperations.StaticFileTypes.Fav"></div>
+
+
+        </div>
+        <div class="card-footer">
+            <div class="kt-form__actions">
+                <button type="submit" class="btn btn-primary w-100">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</form>

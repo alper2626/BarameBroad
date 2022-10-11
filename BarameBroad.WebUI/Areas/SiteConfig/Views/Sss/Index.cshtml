@@ -1,0 +1,105 @@
+﻿@using BaseEntities.Database
+@model Sss
+
+@{
+    ViewData["Title"] = "Sss Listesi";
+
+}
+<style>
+</style>
+<div class="card card-custom mx-4">
+    <div class="card-header">
+        <div class="card-title">
+            <h3 class="card-label">
+                S.s.s Listesi
+            </h3>
+        </div>
+
+        <div class="card-toolbar">
+            <div class="dropdown dropdown-inline">
+                <button type="button" class="btn btn-clean" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <b>  İşlemler </b>
+                    <i class="fa fa-arrow-right fa-sm"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
+                    <ul class="navi navi-hover">
+                        <li class="navi-item">
+                            <a asp-controller="Sss" asp-action="Create" asp-area="SiteConfig" class="navi-link">
+                                
+                                <span class="navi-text">Yeni S.s.s Ekle</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="card-body">
+        @(Html.DevExtreme().DataGrid<Sss>().ID("SssTable")
+            .Columns(columns =>
+            {
+                columns.AddFor(w => w.MasterId).Caption("İşlemler").CellTemplate(
+                    @<text>
+
+                        <div class="dropdown grid-menu-btn">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                -- İşlem Seçin --
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="pointer gray dropdown-item" href="@Url.Action("Update", "Sss", new {Area = "SiteConfig"})?id=<%=value%>">
+                                    S.s.s Düzenle
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="pointer red dropdown-item" data-area="SiteConfig" data-async-remove-grid="Sss" data-ref="<%=data.MasterId%>" data-from="SssTable" data-refresh="false">
+                                    Sil
+                                </a>
+                            </div>
+                        </div>
+                     </text>
+
+                    ).Alignment(HorizontalAlignment.Center);
+
+
+                columns.AddFor(s => s.Question).Caption("Soru");
+                columns.AddFor(s => s.Description).Caption("Cevap");
+            })
+            .Summary(s => s.TotalItems(items =>
+            {
+                items.AddFor(m => m.Id)
+                    .SummaryType(SummaryType.Count).Alignment(HorizontalAlignment.Left)
+                    .CustomizeText(@<text>
+                                       function(data) { return "S.s.s Sayısı : " + data.value; }
+                                    </text>);
+
+            }))
+            .SearchPanel(searchPanel => searchPanel.Visible(true).Width(250).Placeholder("Buradan Arama Yapabilirsiniz..."))
+            .ElementAttr("IsDxGridTable", true)
+            .Export(export => export.Enabled(true))
+            .AllowColumnResizing(true)
+            .AllowColumnReordering(true)
+            .ColumnAutoWidth(true)
+            .GroupPanel(panel => panel.Visible(true).EmptyPanelText("Gruplamak istediğiniz kolonu sürükleyin"))
+            .RemoteOperations(true)
+            .NoDataText("Aradığınız kriterlere göre bir veri bulunamadı.")
+            .ShowBorders(true)
+            .HoverStateEnabled(true)
+            .RowAlternationEnabled(true)
+            .OnContentReady("pageEvents.setTooltips")
+            .Paging(pager => pager.Enabled(true).PageSize(10))
+            .NoDataText("Görüntülenecek veri bulunamadı.")
+            .LoadPanel(load => load.Enabled(true).ShowIndicator(true).Text("Yükleniyor"))
+            .FilterRow(row => row.Visible(true).ApplyFilterText("Arama").ApplyFilter(GridApplyFilterMode.Auto))
+            .DataSource(ds => ds.Mvc()
+                .LoadAction("GridSource")
+                .Controller("Sss")
+                .Area("SiteConfig")
+            )
+            .Width("99%")
+            )
+
+    </div>
+</div>
+
+

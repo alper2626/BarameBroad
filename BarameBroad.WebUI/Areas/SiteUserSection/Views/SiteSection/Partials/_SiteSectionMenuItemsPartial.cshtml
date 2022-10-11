@@ -1,0 +1,8 @@
+﻿@model List<BaseEntities.Concrete.SelectBoxModel>
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <li class="kt-menu__item " aria-haspopup="true"><a asp-controller="SiteSection" asp-action="Update" asp-area="SiteUserSection" asp-route-id="@item.Id" class="kt-menu__link "><i class="kt-menu__link-icon flaticon2-user"></i><span class="kt-menu__link-text">@item.DisplayValue</span></a></li>
+    }
+}

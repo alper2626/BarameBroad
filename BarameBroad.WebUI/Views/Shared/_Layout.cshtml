@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @RenderSection("head",required:false)
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/fontawesome-free/css/all.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/animate.compat.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/simple-line-icons/css/simple-line-icons.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/owl.carousel/assets/owl.carousel.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/owl.carousel/assets/owl.theme.default.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/magnific-popup/magnific-popup.min.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/css/theme.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/theme-elements.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/theme-blog.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/theme-shop.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/css/demo-business-consulting-4.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/skin-business-consulting-4.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/custom.css" asp-append-version="true" />
+
+    <script src="~/js/modernizr/modernizr.min.js"></script>
+
+</head>
+<body data-plugin-cursor-effect>
+    <div class="body">
+        @await Component.InvokeAsync("UserHeader")
+
+
+        <div role=main class="main">
+            @RenderBody()
+        </div>
+
+        @await Component.InvokeAsync("UserFooter")
+
+    </div>
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/jquery.appear/jquery.appear.js"></script>
+    <script src="~/lib/jquery.easing/jquery.easing.min.js"></script>
+    <script src="~/lib/jquery.cookie/jquery.cookie.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery.validation/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
+    <script src="~/lib/jquery.gmap/jquery.gmap.min.js"></script>
+    <script src="~/lib/lazysizes/lazysizes.min.js"></script>
+    <script src="~/lib/isotope/jquery.isotope.min.js"></script>
+    <script src="~/lib/owl.carousel/owl.carousel.min.js"></script>
+    <script src="~/lib/magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script src="~/lib/vide/jquery.vide.min.js"></script>
+    <script src="~/lib/vivus/vivus.min.js"></script>
+    <script src="~/js/theme.js"></script>
+    <script src="~/js/view.contact.js"></script>
+    <script src="~/lib/particles/particles.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <script src="~/js/custom.js"></script>
+    <script src="~/js/theme.init.js"></script>
+    <script src="~/admin/js/custom/jquery.fancybox.min.js"></script>
+    <script src="~/js/examples.particles.js"></script>
+
+
+</body>
+</html>

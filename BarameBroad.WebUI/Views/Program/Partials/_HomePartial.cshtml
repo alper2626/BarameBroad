@@ -1,0 +1,78 @@
+﻿@using BaseEntities.Database
+@model List<ProgramEntity>
+
+
+<section class="section border-0 bg-quaternary m-0">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col col-lg-9 text-center">
+
+                <div class="divider divider-small divider-small-lg mt-0 text-center appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="0">
+                    <hr class="bg-primary border-radius m-auto">
+                </div>
+                <div class="overflow-hidden mb-1">
+                    <h3 class="font-weight-semi-bold text-color-grey text-uppercase positive-ls-3 text-4 line-height-2 line-height-sm-7 mb-0 appear-animation" data-appear-animation="maskUp" data-appear-animation-delay="100">@(Localizer["programsection1"])</h3>
+                </div>
+                <h2 class="text-color-dark font-weight-bold text-8 pb-4 mb-0 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="200">@(Localizer["programsection2"])</h2>
+
+                <p class="font-weight-medium text-4-5 line-height-5 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="400">@(Localizer["programsection3"]) </p>
+
+            </div>
+        </div>
+
+        <div class="row py-4 appear-animation" data-appear-animation="fadeIn" data-appear-animation-delay="300">
+
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <div class="card card-border card-border-top card-border-hover bg-color-light border-0 box-shadow-6 box-shadow-hover anim-hover-translate-top-10px transition-3ms anim-hover-inner-wrapper">
+                        <div class="card-body p-relative zindex-1 p-5 text-center">
+                            <div class="anim-hover-inner-translate-top-20px transition-3ms">
+                                <img class="img-fluid" src="@await StaticFileOperations.FirstImagePath(item.MasterId,"Program")" />
+                                <h4 class="card-title mt-4 mb-2 text-5 font-weight-bold">@item.Name</h4>
+
+                                @if (item.Description.Length > 45)
+                                {
+                                    <p class="card-text text-3-5">
+                                        @Html.Raw(item.Description.Substring(0,45)) ...
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p class="card-text text-3-5">
+                                        @Html.Raw(item.Description)
+                                    </p>
+                                }
+
+                            </div>
+                            <div class="w-100 text-center p-absolute opacity-0 bottom-30 left-0 transformY-p100 anim-hover-inner-opacity-10 anim-hover-inner-translate-top-0px transition-4ms">
+                                <a asp-action="ProgramDetail" asp-controller="Program" asp-route-friendlyName="@item.FriendlyName" class="read-more text-color-primary font-weight-semibold mt-2 text-2">@(Localizer["detailbutton"]) <i class="fas fa-angle-right position-relative top-1 ms-1"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col col-lg-9 text-center">
+
+                <div class="d-block pt-2 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="300">
+                    <a asp-action="Index" asp-controller="Program" class="btn btn-modern btn-primary btn-arrow-effect-1 text-capitalize text-2-5 px-5 py-3 anim-hover-translate-top-5px transition-2ms">@(Localizer["readmore"]) <i class="fas fa-arrow-right ms-2"></i></a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(function(){
+        if ($.isFunction($.fn['themePluginAnimate']) && $('[data-appear-animation]').length) {
+            theme.fn.dynIntObsInit( '[data-appear-animation], [data-appear-animation-svg]', 'themePluginAnimate', theme.PluginAnimate.defaults );
+        }
+
+    });
+</script>
+

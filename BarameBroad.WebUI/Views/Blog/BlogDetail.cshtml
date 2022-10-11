@@ -1,0 +1,106 @@
+﻿@{
+    ViewData["Title"] = "Blog Detay";
+    List<BlogCategory> categories = ViewData["Categories"] as List<BlogCategory>;
+
+    var paths = StaticFileOperations.FilePaths(Model.MasterId, "Blog");
+}
+@using BaseEntities.Database
+@using System.Globalization
+@model BlogEntity
+@section head{
+    @await Component.InvokeAsync("Seo",new{relatedId=Model.MasterId})
+}
+<section class="page-header page-header-modern bg-color-quaternary p-relative">
+    <div class="container">
+        <div class="row py-5">
+            <div class="col-md-7 order-2 order-md-1 align-self-center p-static">
+                <h1 class="text-color-dark font-weight-bold">@Model.Name</h1>
+            </div>
+            <div class="col-md-5 order-1 order-md-2 align-self-center">
+                <ul class="breadcrumb d-flex justify-content-md-end text-3-5">
+                    <li><a asp-controller="Home" asp-action="Index" class="text-color-default text-color-hover-primary text-decoration-none">@Localizer["menu.home"]</a></li>
+                    <li><a asp-controller="BlogCategory" asp-action="Index" class="text-color-default text-color-hover-primary text-decoration-none">@Localizer["menu.blog"]</a></li>
+                    <li class="active">@Model.Name</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container py-4">
+
+    <div class="row">
+        <div class="col-lg-3">
+            <aside class="sidebar">
+                <form asp-controller="BlogCategory" asp-action="Index" method="get">
+                    <div class="input-group mb-3 pb-1">
+                        <input class="form-control text-1" placeholder="@Localizer["search"]" name="BlogName" type="text">
+                        <button type="submit" class="btn btn-dark text-1 p-2"><i class="fas fa-search m-2"></i></button>
+                    </div>
+                </form>
+                <h5 class="font-weight-semi-bold pt-4">@Localizer["blogcategories"]</h5>
+                <ul class="nav nav-list flex-column mb-5">
+                    @foreach (var item in categories)
+                    {
+                        <li class="nav-item"><a class="nav-link" asp-controller="BlogCategory" asp-action="Index" asp-route-BlogCategoryFriendlyName="@item.FriendlyName">@item.Name</a></li>
+                    }
+                </ul>
+            </aside>
+        </div>
+        <div class="col-lg-9">
+            <div class="blog-posts single-post">
+
+                <article class="post post-large blog-single-post border-0 m-0 p-0">
+                    <div class="post-image ms-0">
+
+                        @for (var j = 0; j < paths.Count(); j++)
+                        {
+                            if (j == 0)
+                            {
+                                <a data-fancybox="gallery" href="@paths[j]" data-caption="@Model.Name">
+                                    <span class="thumb-info thumb-info-no-borders thumb-info-no-borders-rounded thumb-info-lighten">
+                                        <span class="thumb-info-wrapper symbol symbol-150 mr-3">
+                                            <img src="@paths[j]" class="img-fluid" alt="@Model.Name">
+                                            <span class="thumb-info-action">
+                                                <span class="thumb-info-action-icon"><i class="fas fa-plus"></i></span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </a>
+                            }
+                            else
+                            {
+                                <a data-fancybox="gallery" href="@paths[j]" data-caption="@Model.Name" style="display:none">
+                                    <div class="symbol symbol-150 mr-3">
+                                        <img src="@paths[j]" class="img-fluid" alt="@Model.Name">
+                                    </div>
+                                </a>
+                            }
+                        }
+                    </div>
+
+                    <div class="post-date ms-0">
+                        <span class="day">@Model.CreateTime.Day</span>
+                        <span class="month">@Model.CreateTime.ToString("MMMM", CultureInfo.InvariantCulture)</span>
+                    </div>
+
+                    <div class="post-content ms-0">
+
+                        <h2 class="font-weight-semi-bold"><a href="#/">@Model.Name</a></h2>
+
+                        <div class="post-meta">
+                            <span><i class="far fa-user"></i> By <a href="#/">Barem ABroad</a> </span>
+                        </div>
+
+                        <p>
+                            @Html.Raw(Model.Description)
+                        </p>
+
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,104 @@
+﻿@{
+    ViewData["Title"] = Localizer["menu.contact"];
+    BaseEntities.Database.SiteConfig cfg = ViewData["Config"] as BaseEntities.Database.SiteConfig;
+  SeoEntity seoModel = new SeoEntity
+            {
+                Description = "barem abroad hakkında genel bilgileri bu sayfadan ögrenebilirsiniz.",
+                Keywords = $"barem abroad hakkında,hakkımızda,iletisim,barem abroad iletisim,biz kimiz,barem abroad biz kimiz",
+                Title = "Hakkımızda"
+            };
+}
+@section head
+ {
+     @await Component.InvokeAsync("CustomSeo", new { model = seoModel })
+ }
+@using BaseEntities.Database
+@using WebUI.Models
+@model PostContactForm
+
+<section class="page-header page-header-modern bg-color-quaternary p-relative">
+    <div class="container">
+        <div class="row py-5">
+            <div class="col-md-8 order-2 order-md-1 align-self-center p-static">
+                <h1 class="text-color-dark font-weight-bold">@Localizer["menu.contact"]</h1>
+            </div>
+            <div class="col-md-3 order-1 order-md-2 align-self-center">
+                <ul class="breadcrumb d-flex justify-content-md-end text-3-5">
+                    <li><a asp-controller="Home" asp-action="Index" class="text-color-default text-color-hover-primary text-decoration-none">@Localizer["menu.home"]</a></li>
+                    <li class="active">@Localizer["menu.contact"]</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container py-4">
+
+    <div class="row mb-2">
+        <div class="col-lg-8 col-md-12">
+
+            <h2 class="font-weight-bold text-7 mt-2 mb-0">@Localizer["contactsection1"]</h2>
+            <p class="mb-4">@Localizer["contactsection2"]</p>
+
+            <form class="contact-form-recaptcha-v3" asp-controller="SiteConfig" asp-action="SendMail" method="post">
+
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label class="form-label mb-1 text-2">@Localizer["contactnamefield"]</label>
+                        @Html.TextBoxFor(w=>w.FullName, new{placeholder=Localizer["contactsection5"].Value,aria_label=Localizer["contactsection5"].Value,@class="form-control text-3 h-auto py-2"})
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label class="form-label mb-1 text-2">@Localizer["contactmailfield"]</label>
+                        @Html.TextBoxFor(w=>w.PhoneNumber, new{placeholder=Localizer["contactsection6"].Value,aria_label=Localizer["contactsection6"].Value,@class="form-control text-3 h-auto py-2"})
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col">
+                        <label class="form-label mb-1 text-2">@Localizer["contactsubjectfield"]</label>
+                        @Html.TextBoxFor(w=>w.Subject, new{placeholder=Localizer["contactsection4"].Value,aria_label=Localizer["contactsection4"].Value,@class="form-control text-3 h-auto py-2"})
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col">
+                        <label class="form-label mb-1 text-2">@Localizer["contactmessagefield"]</label>
+                        @Html.TextAreaFor(w=>w.Message, new{@class="form-control text-3 h-auto py-2",rows=5})
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col">
+                        <input type="submit" value="@Localizer["sendbutton"]" class="btn btn-primary btn-modern">
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <div class="col-lg-4 col-md-12">
+            <div>
+                <h4 class="pt-5">@Localizer["contactsection11"]</h4>
+                <ul class="list list-icons list-icons-style-3 mt-2">
+                    <li><i class="fas fa-map-marker-alt top-6"></i> <strong>@Localizer["contactaddressfield"]:</strong> @cfg.Address</li>
+                    <li><i class="fas fa-phone top-6"></i> <strong>@Localizer["contactphonefield"]:</strong> @cfg.PhoneNumber</li>
+                    <li><i class="fas fa-envelope top-6"></i> <strong>@Localizer["contactmailfield"]:</strong> <a href="mailto:@cfg.MailAddress">@cfg.MailAddress</a></li>
+                </ul>
+            </div>
+            <div>
+
+                <h4 class="pt-5">@Localizer["contactsection44"]</h4>
+                <ul class="list list-icons list-dark mt-2">
+                    <li><i class="far fa-clock top-6"></i> @Localizer["contactworkdays"] - 9:00 - 21:00</li>
+                    <li><i class="far fa-clock top-6"></i> @Localizer["contactholiday"]</li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Google Maps - Go to the bottom of the page to change settings and map location. -->
+<div id="googlemaps" class="google-map m-0 appear-animation" data-appear-animation="fadeIn" data-appear-animation-delay="300" style="height:450px;"></div>
+
+@section Scripts{
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNas&callback=initMap&v=weekly"
+        defer></script>
+}

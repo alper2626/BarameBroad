@@ -1,0 +1,70 @@
+﻿@using BaseEntities.Database
+@model BaseEntities.Concrete.CreateEntityModel<MasterCity,City>
+
+@{
+    ViewData["Title"] = "Şehir Oluştur";
+    string paneClass = "show active";
+    string linkClass = "active";
+}
+<!--begin::Card-->
+<div class="card card-custom card-sticky" id="kt_page_sticky_card">
+    <div class="card-header card-header-tabs-line">
+        <div class="card-title">
+            <h3 class="card-label">Şehir Ekle</h3>
+        </div>
+        <div class="card-toolbar">
+            <ul class="nav nav-tabs nav-bold nav-tabs-line">
+                @for (var i = 0; i < Model.LangEntities.Count; i++)
+                {
+                    if (i == 0)
+                    {
+                        linkClass = "active";
+                    }
+                    else
+                    {
+                        linkClass = "";
+                    }
+
+                    <li class="nav-item">
+                        <a class="nav-link @linkClass" data-toggle="tab" href="#kt_tab_pane_@Model.LangEntities[i].Lang.Split("-")[0]">
+                            <span class="nav-text">@Model.LangEntities[i].Lang</span>
+                        </a>
+                    </li>
+                }
+
+            </ul>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="tab-content">
+            <form class="kt-form" method="post" asp-area="CityTown" asp-controller="City" asp-action="Create" id="upload-imagezone" data-redirect="@Url.Action("Index","City",new{Area="CityTown"})">
+
+                @for (var i = 0; i < Model.LangEntities.Count; i++)
+                {
+                    if (i == 0)
+                    {
+                        linkClass = "show active";
+                    }
+                    else
+                    {
+                        linkClass = "";
+                    }
+                    <div class="tab-pane fade @paneClass" id="kt_tab_pane_@Model.LangEntities[i].Lang.Split("-")[0]" role="tabpanel" aria-labelledby="kt_tab_pane_@Model.LangEntities[i].Lang.Split("-")[0]">
+                        <div class="form-group">
+                            @Html.LabelFor(s => s.LangEntities[i].Name, "Ad")
+                            @Html.TextBoxFor(s => s.LangEntities[i].Name, new { @class = "form-control", placeholder = "Şehir Adını Girin." })
+                            @Html.ValidationMessageFor(s => s.LangEntities[i].Name)
+                        </div>
+                    </div>
+                }
+
+            </form>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="kt-form__actions">
+            <button type="submit" class="btn btn-primary w-100">Kaydet</button>
+        </div>
+    </div>
+</div>
+<!--end::Card-->

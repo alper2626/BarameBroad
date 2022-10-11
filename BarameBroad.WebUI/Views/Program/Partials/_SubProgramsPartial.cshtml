@@ -1,0 +1,22 @@
+﻿@using BaseEntities.Database
+@model List<ProgramEntity>
+
+<section class="section border-0 m-0 py-4" style="background-color:#F4F9FD !important">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <ul class="list list-unstyled list-inline d-flex  flex-column flex-sm-row mb-0">
+                    <li class="list-inline-item custom-text-color-1 color-inherit mb-lg-0 text-2 pe-2">@Localizer["subprograms"]:</li>
+                    @foreach (var item in Model)
+                    {
+                        <li class="list-inline-item mb-lg-0">
+                            <a asp-action="ProgramDetail" asp-controller="Program" asp-route-friendlyName="@item.FriendlyName" class="btn btn-modern btn-secondary btn-rounded btn-px-2 py-1 border-0">
+                                @item.Name
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>

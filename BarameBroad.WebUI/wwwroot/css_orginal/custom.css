@@ -1,0 +1,23 @@
+.image-section {
+    /*background-image: url("../../img/banner_arkaplan.jpg") !important*/
+    background-image: url("../../img/banner.jpg") !important
+}
+
+.bottom-right-image {
+    position: absolute !important;
+    right: 0 !important;
+    bottom: 0 !important;
+}
+
+.logo-about {
+    width: 150px;
+    height: 100px;
+}
+
+.owl-nav > button {
+    color: #808285 !important;
+}
+
+    .owl-nav > button :hover {
+        color: #f15c22 !important;
+    }

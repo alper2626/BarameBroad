@@ -1,0 +1,111 @@
+﻿@using BarameBroad.WebUI.Localizer
+@using BaseEntities.Database
+@using BaseEntities.EnumTypes
+@model MasterSchool
+
+@{
+    ViewData["Title"] = "Okul Düzenle";
+    string paneClass = "show active";
+    string linkClass = "active";
+}
+<!--begin::Card-->
+<div class="card card-custom card-sticky" id="kt_page_sticky_card">
+    <div class="card-header card-header-tabs-line">
+        <div class="card-title">
+            <h3 class="card-label">Okul Düzenle</h3>
+        </div>
+        <div class="card-toolbar">
+            <ul class="nav nav-tabs nav-bold nav-tabs-line">
+                @for (var i = 0; i < Languages.All.Count; i++)
+                {
+                    if (i == 0)
+                    {
+                        linkClass = "active";
+                    }
+                    else
+                    {
+                        linkClass = "";
+                    }
+
+                    <li class="nav-item">
+                        <a class="nav-link @linkClass" data-toggle="tab" href="#kt_tab_pane_@Languages.All[i].Split("-")[0]">
+                            <span class="nav-text">@Languages.All[i]</span>
+                        </a>
+                    </li>
+                }
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_content">
+                        <span class="nav-text">Alt İçerikler</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="ContentDetail" target="_blank" asp-action="Create" asp-area="Program" asp-route-Value="@Model.Id" asp-route-DisplayText="@Model.Name" asp-route-EntityRelationType="@EntityRelationType.School" class="navi-link">
+                        <span class="navi-text">Yeni Alt Başlık Ekle</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <form class="kt-form" method="post" asp-area="Program" asp-controller="School" asp-action="Update" id="upload-imagezone" data-redirect="@Url.Action("Index","School",new{Area="Program"})">
+        <div class="card-body">
+            <div class="tab-content">
+
+                <div class="tab-pane fade" id="kt_tab_pane_content" role="tabpanel" aria-labelledby="kt_tab_pane_content">
+
+                    <div data-partial="@Url.Action("GridPartial","ContentDetail",new ContentDetailTempModel{Value=Model.Id ,DisplayText=Model.Name,EntityRelationType=BaseEntities.EnumTypes.EntityRelationType.School})">
+                        Alt İçerikler Yükleniyor...
+                    </div>
+                    <hr />
+                </div>
+
+                @Html.HiddenFor(w=>w.Id)
+                <div class="form-group appender">
+                    @Html.LabelFor(s => s.CityId, "Şehir")
+                    <div data-partial="@Url.Action("CitySelectPartial","City",new{Area="Program",selected=Model.CityId})"> Şehirler Yükleniyor </div>
+                    @Html.HiddenFor(w=>w.CityId)
+                    @Html.ValidationMessageFor(s => s.CityId)
+                </div>
+
+                @for (var i = 0; i < Languages.All.Count; i++)
+                {
+                    @Html.HiddenFor(w=>w.Childrens[i].Id)
+                    @Html.HiddenFor(w=>w.Childrens[i].Lang)
+                    @Html.HiddenFor(w=>w.Childrens[i].FriendlyName)
+                    if (i == 0)
+                    {
+                        paneClass = "show active";
+                    }
+                    else
+                    {
+                        paneClass = "";
+                    }
+                    <div class="tab-pane fade @paneClass" id="kt_tab_pane_@Languages.All[i].Split("-")[0]" role="tabpanel" aria-labelledby="kt_tab_pane_@Languages.All[i].Split("-")[0]">
+
+                        <div class="form-group">
+                            @Html.LabelFor(s => s.Childrens[i].Name, "Ad")
+                            @Html.TextBoxFor(s => s.Childrens[i].Name, new { @class = "form-control", placeholder = "Okul Adını Girin." })
+                            @Html.ValidationMessageFor(s => s.Childrens[i].Name)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(s => s.Childrens[i].Description, "Açıklama")
+                            @Html.TextAreaFor(s => s.Childrens[i].Description, new { @class = "form-control editor", placeholder = "Okul Açıklaması Girin." })
+                            @Html.ValidationMessageFor(s => s.Childrens[i].Description)
+                        </div>
+
+                    </div>
+                }
+
+
+            </div>
+            <div class="form-group">
+                <div data-partial="@Url.Action("FilePartial", "File", new {Area="Admin",itemId = Model.Id, type = "School"})"></div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="kt-form__actions">
+                <button type="submit" class="btn btn-primary w-100">Kaydet</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!--end::Card-->

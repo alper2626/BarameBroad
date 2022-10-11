@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Module.Auth.DataAccess\Module.Auth.DataAccess.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Jobs\FireAndForgetJobs\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DevExtreme.AspNet.Core">
+      <HintPath>..\..\BarameBroad.WebUI\bin\Debug\net6.0\DevExtreme.AspNet.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
